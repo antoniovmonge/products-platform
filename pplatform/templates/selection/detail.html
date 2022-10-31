@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}
+Your Selection
+{% endblock %}
+
+{% block content %}
+{% if selection %}
+<h1>Your selection</h1>
+<br>
+<div class="table-responsive-xl">
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th scope="row" class="col-sm-1"></th>
+        {% for item in selection %}
+        {% with product=item.product %}
+        <td>
+          <div class="row justify-content-end">
+            <div class="col">
+
+            </div>
+            <div class="col">
+              <a href="{{ product.get_absolute_url }}">To product page</a>
+            </div>
+            <div class="col text-end">
+              <form action="{% url 'selection:selection_remove' product.id %}"
+                method="post">
+                <input type="submit" value="Remove" class="btn btn-sm btn-outline-danger">
+                {% csrf_token %}
+              </form>
+            </div>
+          </div>
+        </td>
+        {% endwith %}
+        {% endfor %}
+      </tr>
+      <tr>
+        <th scope="row" class="col-sm-1">Product</th>
+        {% for item in selection %}
+        {% with product=item.product %}
+        <td class="col-sm-2">{{ product.name }}</td>
+        {% endwith %}
+        {% endfor %}
+      </tr>
+      <tr>
+        <th scope="row" class="col-sm-1">Category</th>
+        {% for item in selection %}
+        {% with product=item.product %}
+        <td class="col-sm-2">{{ product.category|capfirst }}</td>
+        {% endwith %}
+        {% endfor %}
+      </tr>
+      <tr>
+        <th scope="row" class="col-sm-1">Image</th>
+        {% for item in selection %}
+        {% with product=item.product %}
+        <td class="col-sm-2 text-center">
+            {% if product.image %}
+            <a href="{{ product.image.url }}" target="_blank">
+              <img src="{% thumbnail product.image 300x0 %}">
+            </a>
+            {% else %}
+            <img src="{% static 'images/no_image.png' %}">
+            {% endif %}
+        </td>
+        {% endwith %}
+        {% endfor %}
+      </tr>
+
+      <tr>
+        <th scope="row" class="col-sm-1">Description</th>
+        {% for item in selection %}
+        {% with product=item.product %}
+        <td class="col-sm-2">{{ product.description }}</td>
+        {% endwith %}
+        {% endfor %}
+      </tr>
+
+
+    </tbody>
+  </table>
+</div>
+<p class="text-right">
+  <a href="{% url 'catalog:product_list' %}" class="btn btn-primary">Continue searching</a>
+  <a href="#" class="btn btn-secondary">Checkout</a>
+</p>
+{% else %}
+<h1>Select some products to compare</h1>
+<a href="{% url 'catalog:product_list' %}" class="btn btn-primary">Search Products</a>
+{% endif %}
+{% endblock %}

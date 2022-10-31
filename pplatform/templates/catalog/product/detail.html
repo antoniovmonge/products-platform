@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% load product %}
+{% load thumbnail %}
+
+{% block title %}
+{{ product.name|capfirst }}
+{% endblock %}
+
+{% block content %}
+
+<!-- ROW WITH PRODUCT NAME AND BUTTON TO ADD/DELETE FROM SELECTION -->
+<div class="row justify-content-between">
+
+  <!-- LEFT COL: Product Name, Company, Category -->
+  <div class="col">
+    <h1>{{product.name}}</h1>
+    <h6>Company: <a href="{{ product.company.get_absolute_url }}">
+        {{ product.company }}
+      </a>
+    </h6>
+    <h6>Category: <a href="{{ product.category.get_absolute_url }}">
+        {{ product.category|capfirst }}
+      </a>
+    </h6>
+  </div>
+  <!-- RIGHT COL: Button Add/Delete from selection -->
+  <div class="col text-end">
+    <!-- BUTTON ADD TO SELECTION -->
+    {% if product.slug in selection_list %}
+      <form action="{% url 'selection:selection_remove' product.id %}"
+        method="post">
+        <input type="submit" value="Remove from selected products" class="btn btn-secondary">
+        {% csrf_token %}
+      </form>
+      {% else %}
+      <form action="{% url 'selection:selection_add' product.id %}" method="post">
+        {{ selection_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to selection" class="btn btn-primary">
+      </form>
+    {% endif %}
+    <!-- END BUTTON ADD TO SELECTION -->
+  </div>
+</div>
+
+<br>
+<!-- ROW WITH PRODUCT INFO COLUMNS -->
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+  <!-- LEFT COL: Product General info -->
+  <div class="col">
+    <div class="card">
+
+      {% if product.image %}
+      <a href="{{ product.image.url }}" target=”_blank”>
+        <img src="{% thumbnail product.image 300x0 %}" class="card-img-top" style="height: 200px; object-fit: cover;">
+      </a>
+      {% else %}
+      <img src="{% static 'images/no_image.png' %}" class="card-img-top" style="height: 200px; object-fit: cover;">
+      {% endif %}
+
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        {% if product.description %}
+        <p class="card-text">{{product.description|linebreaks}}</p>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            {% for content in product.contents.all %}
+              {% with item=content.item %}
+              <!-- <div class="row justify-content-between">
+                <div class="col"> -->
+                  <h4 class="card-title">{{ item.title|capfirst }}</h4>
+                <!-- </div>
+                <div class="col text-end">
+                  <h6 class="card-subtitle text-muted">{{ item|model_name|capfirst }}</h6>
+                </div>
+              </div> -->
+              <!-- Item rendered -->
+              {{item.render}}
+              <!-- End item rendered -->
+              <br>
+              {% endwith %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+</div>
+
+{% endblock content %}

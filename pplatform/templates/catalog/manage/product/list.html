@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}My products{% endblock %}
+
+{% block content %}
+<h1>Products of my company</h1>
+<h4 class="text-muted">{{user.company_own}}</h4>
+<br>
+<div>
+  {% for product in object_list %}
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">{{ product.name }}</h3>
+
+      <a href="{% url 'catalog:product_edit' product.id %}" class="card-link">Edit</a>
+      <a href="{% url 'catalog:product_delete' product.id %}" class="card-link">Delete</a>
+
+    </div>
+  </div>
+  <br>
+  {% empty %}
+  <p>You haven't created any products yet.</p>
+  {% endfor %}
+  <p>
+    <a href="{% url 'catalog:product_create' %}" class="btn btn-primary">Create new product</a>
+  </p>
+  <br>
+
+</div>
+{% endblock %}

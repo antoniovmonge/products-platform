@@ -1,0 +1,7 @@
+{% load thumbnail %}
+<p class="text-center">
+  <br>
+  <a href="{{item.file.url}}" alt="{{ item.title }}" target=”_blank”>
+    <img src="{% thumbnail item.file 200x0 %}" class="rounded">
+  </a>
+</p>

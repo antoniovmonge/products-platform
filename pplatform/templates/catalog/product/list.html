@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+
+  {% if category %}
+  {{ category.name }}
+  {% elif company %}
+  {{ company.name }}
+  {% else %}
+  Products
+  {% endif %}
+
+{% endblock title %}
+
+{% block content %}
+<div class="row gx-5">
+  <!-- Sidebar -->
+  <div class="col-3 p-3 text-white bg-dark">
+    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <span class="fs-4">CATEGORIES</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        {% if not category %}
+        <a href="{% url 'catalog:product_list' %}" class="nav-link active">
+        {% else %}
+        <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
+        {% endif %}
+          <h5>All</h5>
+        </a>
+      </li>
+      {% for c in categories %}
+      <li class="nav-item">
+        {% if category.slug == c.slug %}
+        <a href="{{ c.get_absolute_url }}" class="nav-link active">
+        {% else %}
+        <a href="{{ c.get_absolute_url }}" class="nav-link text-white">
+        {% endif %}
+        <div class="row justify-content-between">
+          <div class="col"><h5>{{ c.name|capfirst }}</h5></div>
+          <div class="col text-end"><p>{{c.total_products}} product{{c.total_products|pluralize}}</p></div>
+        </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    <!-- Companies -->
+    <hr>
+    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <span class="fs-4">COMPANIES</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        {% if not company %}
+        <a href="{% url 'catalog:product_list' %}" class="nav-link active">
+        {% else %}
+        <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
+        {% endif %}
+          <h5>All</h5>
+        </a>
+      </li>
+      {% for c in companies %}
+      <li class="nav-item">
+        {% if company.slug == c.slug %}
+        <a href="{{ c.get_absolute_url }}" class="nav-link active">
+        {% else %}
+        <a href="{{ c.get_absolute_url }}" class="nav-link text-white">
+        {% endif %}
+          <div class="row justify-content-between">
+            <div class="col"><h5>{{ c.name|capfirst }}</h5></div>
+            <div class="col text-end"><p>{{c.total_products}} product{{c.total_products|pluralize}}</p></div>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <!-- End Sidebar -->
+  <div class="col-9">
+    <h1>
+      {% if category %}
+      {{ category.name|capfirst }}
+      {% elif company %}
+      {{ company.name|capfirst }}
+      {% else %}
+      Products
+      {% endif %}
+    </h1>
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for product in products %}
+      <div class="col">
+        <div class="card h-100">
+
+          <div class="card-header">
+            {% if product.slug in selection_list %}
+            <form action="{% url 'selection:selection_remove' product.id %}"
+              method="post">
+              <input type="submit" value="Remove" class="btn btn-secondary">
+              {% csrf_token %}
+            </form>
+            {% else %}
+            <form action="{% url 'selection:selection_add' product.id %}" method="post">
+              {{ selection_product_form }}
+              {% csrf_token %}
+              <input type="submit" value="Add to selection" class="btn btn-primary">
+            </form>
+            {% endif %}
+          </div>
+
+          <a href="{{ product.get_absolute_url }}">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top" style="height: 170px; object-fit: cover;">
+            {% else %}
+            <img src="{% static 'images/no_image.png' %}" class="card-img-top" style="height: 170px; object-fit: cover;">
+            {% endif %}
+          </a>
+          <a href="{{ product.get_absolute_url }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name|capfirst }}</h5>
+              {% if product.description %}
+              <p class="card-text">{{product.description|truncatechars:20}}</p>
+              {% endif %}
+            </div>
+          </a>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

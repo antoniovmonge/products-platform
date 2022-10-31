@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% if object %}
+  Edit content "{{ object.title }}"
+  {% else %}
+  Add new content
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>
+{% if object %}
+Edit content "{{ object.title }}"
+{% else %}
+Add new content
+{% endif %}
+</h1>
+<div class="card">
+  <div class="card-body">
+    <h2>Product info</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+    {{ form|crispy }}
+    {% csrf_token %}
+    <br>
+    <input type="submit" value="Save" class="btn btn-primary">
+    </form>
+    <br>
+  </div>
+</div>
+{% endblock %}

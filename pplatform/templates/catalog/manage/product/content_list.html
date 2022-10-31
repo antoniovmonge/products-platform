@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load product %}
+
+{% block title %}
+Product {{ product.name }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row justify-content-between">
+
+  <div class="col-md-6">
+    <h1>Product {{ product.name }}</h1>
+    {% for content in product.contents.all %}
+      {% with item=content.item %}
+        <div class="card">
+          <div class="card-body">
+            <div class="row justify-content-between">
+              <div class="col">
+                <h4 class="card-title">{{ item.title }}</h4>
+              </div>
+              <div class="col text-end">
+                <h6 class="card-subtitle text-muted">{{ item|model_name|capfirst }}</h6>
+              </div>
+            </div>
+            <p class="card-text">
+              {{item.render}}
+              <br>
+              <div class="row justify-content-center">
+                <div class="col col-md-2">
+                  <a href="{% url 'catalog:product_content_update' product.id item|model_name item.id %}"
+                    class="btn btn-secondary">Edit</a>
+                </div>
+                <div class="col col-md-2">
+                  <form action="{% url 'catalog:product_content_delete' content.id %}"
+                    method="post">
+                    <input type="submit" value="Delete" class="btn btn-outline-danger">
+                    {% csrf_token %}
+                  </form>
+                </div>
+              </div>
+            </p>
+          </div>
+        </div>
+        <br>
+      {% endwith %}
+    {% empty %}
+    <p>This product has no contents yet.</p>
+
+    {% endfor %}
+
+  </div>
+
+  <div class="col-md-6 text-center">
+    <h3>Add new content:</h3>
+    <a href="{% url 'catalog:product_content_create' product.id 'text' %}" class="btn btn-outline-secondary btn-sm">
+      Text
+    </a>
+    <a href="{% url 'catalog:product_content_create' product.id 'image' %}"
+      class="btn btn-outline-secondary btn-sm">Image</a>
+    <a href="{% url 'catalog:product_content_create' product.id 'video' %}"
+      class="btn btn-outline-secondary btn-sm">Video</a>
+    <a href="{% url 'catalog:product_content_create' product.id 'file' %}"
+      class="btn btn-outline-secondary btn-sm">File</a>
+  </div>
+
+</div>
+
+
+<br>
+
+<br>
+<br>
+<br>
+
+{% endblock %}
