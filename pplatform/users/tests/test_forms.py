@@ -3,13 +3,13 @@ Module for all Form Tests.
 """
 from django.utils.translation import gettext_lazy as _
 
-from pplatform.users.forms import UserAdminCreationForm
+from pplatform.users.forms import CustomUserCreationForm
 from pplatform.users.models import CustomUser
 
 
-class TestUserAdminCreationForm:
+class TestCustomUserCreationForm:
     """
-    Test class for all tests related to the UserAdminCreationForm
+    Test class for all tests related to the CustomUserCreationForm
     """
 
     def test_email_validation_error_msg(self, user: CustomUser):
@@ -22,7 +22,7 @@ class TestUserAdminCreationForm:
 
         # The user already exists,
         # hence cannot be created.
-        form = UserAdminCreationForm(
+        form = CustomUserCreationForm(
             {
                 "email": user.email,
                 "password1": user.password,
