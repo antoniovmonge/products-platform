@@ -1,6 +1,6 @@
 from django.urls import reverse
 
-from pplatform.users.models import User
+from pplatform.users.models import CustomUser
 
 
 class TestUserAdmin:
@@ -28,7 +28,7 @@ class TestUserAdmin:
             },
         )
         assert response.status_code == 302
-        assert User.objects.filter(email="test@email.com").exists()
+        assert CustomUser.objects.filter(email="test@email.com").exists()
 
     # def test_view_user(self, admin_client):
     #     user = User.objects.get(email="admin@email.com")

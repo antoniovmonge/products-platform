@@ -1,6 +1,6 @@
 import pytest
 
-from pplatform.users.models import User
+from pplatform.users.models import CustomUser
 from pplatform.users.tests.factories import UserFactory
 
 
@@ -10,5 +10,5 @@ def media_storage(settings, tmpdir):
 
 
 @pytest.fixture
-def user(db) -> User:
+def user(db) -> CustomUser:
     return UserFactory()

@@ -1,9 +1,9 @@
 from django.urls import resolve, reverse
 
-from pplatform.users.models import User
+from pplatform.users.models import CustomUser
 
 
-def test_user_detail(user: User):
+def test_user_detail(user: CustomUser):
     assert (
         reverse("api:user-detail", kwargs={"email": user.email})
         == f"/api/users/{user.email}/"

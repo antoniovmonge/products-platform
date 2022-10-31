@@ -8,8 +8,8 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.test import RequestFactory
 from django.urls import reverse
 
-from pplatform.users.forms import UserAdminChangeForm
-from pplatform.users.models import User
+from pplatform.users.forms import CustomUserChangeForm
+from pplatform.users.models import CustomUser
 from pplatform.users.tests.factories import UserFactory
 from pplatform.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
@@ -28,7 +28,7 @@ class TestUserUpdateView:
     def dummy_get_response(self, request: HttpRequest):
         return None
 
-    def test_get_success_url(self, user: User, rf: RequestFactory):
+    def test_get_success_url(self, user: CustomUser, rf: RequestFactory):
         view = UserUpdateView()
         request = rf.get("/fake-url/")
         request.user = user
@@ -37,7 +37,7 @@ class TestUserUpdateView:
 
         assert view.get_success_url() == f"/users/{user.email}/"
 
-    def test_get_object(self, user: User, rf: RequestFactory):
+    def test_get_object(self, user: CustomUser, rf: RequestFactory):
         view = UserUpdateView()
         request = rf.get("/fake-url/")
         request.user = user
@@ -46,7 +46,7 @@ class TestUserUpdateView:
 
         assert view.get_object() == user
 
-    def test_form_valid(self, user: User, rf: RequestFactory):
+    def test_form_valid(self, user: CustomUser, rf: RequestFactory):
         view = UserUpdateView()
         request = rf.get("/fake-url/")
 
@@ -58,7 +58,7 @@ class TestUserUpdateView:
         view.request = request
 
         # Initialize the form
-        form = UserAdminChangeForm()
+        form = CustomUserChangeForm()
         form.cleaned_data = {}
         form.instance = user
         view.form_valid(form)
@@ -68,7 +68,7 @@ class TestUserUpdateView:
 
 
 class TestUserRedirectView:
-    def test_get_redirect_url(self, user: User, rf: RequestFactory):
+    def test_get_redirect_url(self, user: CustomUser, rf: RequestFactory):
         view = UserRedirectView()
         request = rf.get("/fake-url")
         request.user = user
@@ -79,7 +79,7 @@ class TestUserRedirectView:
 
 
 class TestUserDetailView:
-    def test_authenticated(self, user: User, rf: RequestFactory):
+    def test_authenticated(self, user: CustomUser, rf: RequestFactory):
         request = rf.get("/fake-url/")
         request.user = UserFactory()
 
@@ -87,7 +87,7 @@ class TestUserDetailView:
 
         assert response.status_code == 200
 
-    def test_not_authenticated(self, user: User, rf: RequestFactory):
+    def test_not_authenticated(self, user: CustomUser, rf: RequestFactory):
         request = rf.get("/fake-url/")
         request.user = AnonymousUser()
 

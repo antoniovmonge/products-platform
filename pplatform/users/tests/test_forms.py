@@ -4,7 +4,7 @@ Module for all Form Tests.
 from django.utils.translation import gettext_lazy as _
 
 from pplatform.users.forms import UserAdminCreationForm
-from pplatform.users.models import User
+from pplatform.users.models import CustomUser
 
 
 class TestUserAdminCreationForm:
@@ -12,7 +12,7 @@ class TestUserAdminCreationForm:
     Test class for all tests related to the UserAdminCreationForm
     """
 
-    def test_email_validation_error_msg(self, user: User):
+    def test_email_validation_error_msg(self, user: CustomUser):
         """
         Tests UserAdminCreation Form's unique validator functions correctly by testing:
             1) A new user with an existing email cannot be added.
