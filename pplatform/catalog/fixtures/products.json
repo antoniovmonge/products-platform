@@ -1,14 +1,5 @@
 [
 {
-  "model": "catalog.company",
-  "pk": 1,
-  "fields": {
-    "name": "Cosentino",
-    "slug": "cosentino",
-    "created": "2022-10-22T16:17:48.370Z"
-  }
-},
-{
   "model": "catalog.category",
   "pk": 1,
   "fields": {
@@ -30,13 +21,15 @@
   "fields": {
     "category": 1,
     "company": 1,
-    "name": "Cement 1",
-    "slug": "cement-1",
-    "image": "products/2022/10/22/shutterstock_2062504613-min-scaled.jpg",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "name": "Silestone, Polaris",
+    "slug": "silestone-polaris",
+    "image": "products/2022/11/01/Silestone_Polaris.jpg",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas congue quisque. Sodales ut eu sem integer vitae justo eget magna. Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo. Orci eu lobortis elementum nibh tellus molestie nunc non. Sed vulputate mi sit amet mauris commodo. Eu consequat ac felis donec et odio pellentesque. Consectetur lorem donec massa sapien faucibus et molestie. Volutpat consequat mauris nunc congue nisi vitae suscipit tellus. Leo urna molestie at elementum eu facilisis. Risus nec feugiat in fermentum posuere. Lacinia quis vel eros donec ac odio. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris. Viverra ipsum nunc aliquet bibendum. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Lobortis feugiat vivamus at augue eget arcu dictum.\\r\\n\\r\\nVestibulum rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt. Sagittis purus sit amet volutpat consequat mauris nunc. Molestie a iaculis at erat pellentesque adipiscing commodo elit. Felis imperdiet proin fermentum leo vel orci. Est placerat in egestas erat imperdiet. Ornare arcu odio ut sem nulla. Aliquet porttitor lacus luctus accumsan tortor. Enim nunc faucibus a pellentesque sit. Dictum fusce ut placerat orci nulla pellentesque. Eu facilisis sed odio morbi quis commodo. Pretium nibh ipsum consequat nisl vel. Vulputate ut pharetra sit amet aliquam.\\r\\n\\r\\nNulla porttitor massa id neque aliquam vestibulum. Risus feugiat in ante metus dictum at tempor. Pulvinar pellentesque habitant morbi tristique senectus et. Consectetur libero id faucibus nisl tincidunt. Nec ultrices dui sapien eget mi. Nunc aliquet bibendum enim facilisis gravida neque convallis a. Sagittis aliquam malesuada bibendum arcu vitae elementum. Parturient montes nascetur ridiculus mus mauris. Enim blandit volutpat maecenas volutpat. Convallis posuere morbi leo urna molestie. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Aliquam malesuada bibendum arcu vitae elementum curabitur. Quisque egestas diam in arcu cursus euismod.\\r\\n\\r\\nVitae turpis massa sed elementum. Orci eu lobortis elementum nibh tellus molestie. Velit laoreet id donec ultrices. Sed id semper risus in hendrerit gravida rutrum quisque. Ut diam quam nulla porttitor massa. Aliquet nec ullamcorper sit amet risus nullam eget felis. Enim nec dui nunc mattis. Augue neque gravida in fermentum et sollicitudin. In aliquam sem fringilla ut morbi tincidunt augue interdum. Proin sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. At tempor commodo ullamcorper a lacus vestibulum. Commodo quis imperdiet massa tincidunt. Tempor nec feugiat nisl pretium fusce id velit. Egestas integer eget aliquet nibh praesent tristique magna sit amet.\\r\\n\\r\\nTortor condimentum lacinia quis vel eros donec ac. Mi bibendum neque egestas congue quisque. Sit amet aliquam id diam maecenas. Egestas maecenas pharetra convallis posuere morbi leo urna molestie. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Ornare quam viverra orci sagittis eu volutpat. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Mauris augue neque gravida in fermentum et sollicitudin ac. Gravida quis blandit turpis cursus in hac habitasse. Ultricies tristique nulla aliquet enim tortor. Volutpat blandit aliquam etiam erat velit. Condimentum lacinia quis vel eros donec ac odio tempor orci. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed. Pharetra vel turpis nunc eget lorem dolor sed viverra ipsum. Mattis enim ut tellus elementum sagittis vitae. Cras adipiscing enim eu turpis egestas pretium aenean. Id leo in vitae turpis massa sed elementum tempus egestas. Sit amet nisl suscipit adipiscing bibendum est ultricies integer quis.",
+    "published": "2022-11-01T11:38:27Z",
     "verified": true,
-    "created": "2022-10-22T16:20:38.939Z",
-    "updated": "2022-10-22T16:20:38.939Z"
+    "created": "2022-11-01T11:39:21.978Z",
+    "updated": "2022-11-01T11:39:21.978Z",
+    "status": "UP"
   }
 },
 {
@@ -45,21 +38,23 @@
   "fields": {
     "category": 2,
     "company": 1,
-    "name": "Silestone, Polaris",
-    "slug": "silestone-polaris",
-    "image": "products/2022/10/22/Silestone_Polaris.jpg",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu mi bibendum neque egestas congue quisque. Sodales ut eu sem integer vitae justo eget magna. Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo. Orci eu lobortis elementum nibh tellus molestie nunc non. Sed vulputate mi sit amet mauris commodo. Eu consequat ac felis donec et odio pellentesque. Consectetur lorem donec massa sapien faucibus et molestie. Volutpat consequat mauris nunc congue nisi vitae suscipit tellus. Leo urna molestie at elementum eu facilisis. Risus nec feugiat in fermentum posuere. Lacinia quis vel eros donec ac odio. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris. Viverra ipsum nunc aliquet bibendum. In hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Lobortis feugiat vivamus at augue eget arcu dictum.\r\n\r\nVestibulum rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt. Sagittis purus sit amet volutpat consequat mauris nunc. Molestie a iaculis at erat pellentesque adipiscing commodo elit. Felis imperdiet proin fermentum leo vel orci. Est placerat in egestas erat imperdiet. Ornare arcu odio ut sem nulla. Aliquet porttitor lacus luctus accumsan tortor. Enim nunc faucibus a pellentesque sit. Dictum fusce ut placerat orci nulla pellentesque. Eu facilisis sed odio morbi quis commodo. Pretium nibh ipsum consequat nisl vel. Vulputate ut pharetra sit amet aliquam.\r\n\r\nNulla porttitor massa id neque aliquam vestibulum. Risus feugiat in ante metus dictum at tempor. Pulvinar pellentesque habitant morbi tristique senectus et. Consectetur libero id faucibus nisl tincidunt. Nec ultrices dui sapien eget mi. Nunc aliquet bibendum enim facilisis gravida neque convallis a. Sagittis aliquam malesuada bibendum arcu vitae elementum. Parturient montes nascetur ridiculus mus mauris. Enim blandit volutpat maecenas volutpat. Convallis posuere morbi leo urna molestie. Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit. Aliquam malesuada bibendum arcu vitae elementum curabitur. Quisque egestas diam in arcu cursus euismod.\r\n\r\nVitae turpis massa sed elementum. Orci eu lobortis elementum nibh tellus molestie. Velit laoreet id donec ultrices. Sed id semper risus in hendrerit gravida rutrum quisque. Ut diam quam nulla porttitor massa. Aliquet nec ullamcorper sit amet risus nullam eget felis. Enim nec dui nunc mattis. Augue neque gravida in fermentum et sollicitudin. In aliquam sem fringilla ut morbi tincidunt augue interdum. Proin sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. At tempor commodo ullamcorper a lacus vestibulum. Commodo quis imperdiet massa tincidunt. Tempor nec feugiat nisl pretium fusce id velit. Egestas integer eget aliquet nibh praesent tristique magna sit amet.\r\n\r\nTortor condimentum lacinia quis vel eros donec ac. Mi bibendum neque egestas congue quisque. Sit amet aliquam id diam maecenas. Egestas maecenas pharetra convallis posuere morbi leo urna molestie. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Ornare quam viverra orci sagittis eu volutpat. Accumsan in nisl nisi scelerisque eu ultrices vitae auctor eu. Mauris augue neque gravida in fermentum et sollicitudin ac. Gravida quis blandit turpis cursus in hac habitasse. Ultricies tristique nulla aliquet enim tortor. Volutpat blandit aliquam etiam erat velit. Condimentum lacinia quis vel eros donec ac odio tempor orci. Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Fermentum posuere urna nec tincidunt praesent semper feugiat nibh sed. Pharetra vel turpis nunc eget lorem dolor sed viverra ipsum. Mattis enim ut tellus elementum sagittis vitae. Cras adipiscing enim eu turpis egestas pretium aenean. Id leo in vitae turpis massa sed elementum tempus egestas. Sit amet nisl suscipit adipiscing bibendum est ultricies integer quis.",
+    "name": "Cement 1",
+    "slug": "cement-1",
+    "image": "products/2022/11/01/shutterstock_2062504613-min-scaled.jpg",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "published": "2022-11-01T11:39:33Z",
     "verified": true,
-    "created": "2022-10-22T16:24:09.993Z",
-    "updated": "2022-10-22T16:25:11.421Z"
+    "created": "2022-11-01T11:40:11.355Z",
+    "updated": "2022-11-01T11:40:11.355Z",
+    "status": "UP"
   }
 },
 {
   "model": "catalog.content",
   "pk": 1,
   "fields": {
-    "product": 1,
-    "content_type": 5,
+    "product": 2,
+    "content_type": 30,
     "object_id": 1
   }
 },
@@ -67,17 +62,8 @@
   "model": "catalog.content",
   "pk": 2,
   "fields": {
-    "product": 1,
-    "content_type": 4,
-    "object_id": 1
-  }
-},
-{
-  "model": "catalog.content",
-  "pk": 3,
-  "fields": {
-    "product": 1,
-    "content_type": 3,
+    "product": 2,
+    "content_type": 28,
     "object_id": 1
   }
 },
@@ -86,21 +72,10 @@
   "pk": 1,
   "fields": {
     "company": 1,
-    "title": "Turra",
-    "created": "2022-10-27T14:33:28.234Z",
-    "updated": "2022-10-27T14:33:28.234Z",
-    "content": "Vel fusce at velit hendrerit sociosqu posuere montes curabitur habitant litora netus natoque, mus duis sapien risus mi volutpat nisi libero nunc urna tempor. Natoque malesuada leo blandit semper euismod laoreet fusce vel, egestas interdum risus turpis luctus fringilla congue, aenean pulvinar eleifend morbi mollis lectus dignissim. Sagittis nibh donec venenatis gravida proin aptent, inceptos rutrum maecenas ad dapibus quam, dui faucibus dignissim nunc taciti."
-  }
-},
-{
-  "model": "catalog.file",
-  "pk": 1,
-  "fields": {
-    "company": 1,
-    "title": "very important document",
-    "created": "2022-10-27T15:57:02.872Z",
-    "updated": "2022-10-27T15:57:02.872Z",
-    "file": "files/My_Hiring_Guide.pdf"
+    "title": "pajaro",
+    "created": "2022-11-01T11:44:18.638Z",
+    "updated": "2022-11-01T11:44:18.638Z",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepte"
   }
 },
 {
@@ -108,10 +83,10 @@
   "pk": 1,
   "fields": {
     "company": 1,
-    "title": "turra foto",
-    "created": "2022-10-27T14:33:57.948Z",
-    "updated": "2022-10-27T14:44:15.459Z",
-    "file": "images/lavrov-pig_CAifTKc.jpg"
+    "title": "mas pajaros",
+    "created": "2022-11-01T11:44:45.199Z",
+    "updated": "2022-11-01T11:44:45.199Z",
+    "file": "images/Psycovid_project_logo.png"
   }
 }
 ]
