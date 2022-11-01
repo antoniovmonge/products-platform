@@ -20,20 +20,19 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = [
         "name",
         "company",
-        # "slug",
-        # "price",
+        "category",
         "verified",
-        # "created",
+        "status",
         "updated",
     ]
     list_filter = (
         "verified",
         "company__name",
-        # "created",
+        "category",
         # "updated"
     )
-    list_editable = [
-        # "price",
-        "verified"
-    ]
+    search_fields = ["name", "company__name", "category__name"]
+    list_editable = ["status", "verified"]
     prepopulated_fields = {"slug": ("name",)}
+    raw_id_fields = ["company", "created_by"]
+    date_hierarchy = "updated"
