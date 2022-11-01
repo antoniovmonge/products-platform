@@ -4,9 +4,25 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from pplatform.catalog.models import Company
-
 from .managers import CustomUserManager
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, unique=True)
+    # owner = models.ForeignKey(CustomUser, related_name='companies_own', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("name",)
+        verbose_name = "company"
+        verbose_name_plural = "companies"
+
+    def get_absolute_url(self):
+        return reverse("catalog:product_list_by_company", args=[self.slug])
+
+    def __str__(self):
+        return self.name
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
