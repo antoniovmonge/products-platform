@@ -3,6 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.text import slugify
 
 # from django.contrib.auth import get_user_model
@@ -44,6 +45,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    class Status(models.TextChoices):
+        UPLOADED = "UP", "Uploaded"
+        PUBLISHED = "PB", "Published"
+
     category = models.ForeignKey(
         Category,
         related_name="products",
@@ -59,9 +64,13 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products/%Y/%m/%d", blank=True)
     description = models.TextField(blank=True)
     # price = models.DecimalField(max_digits=10, decimal_places=2)
+    published = models.DateTimeField(default=timezone.now)
     verified = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(
+        max_length=2, choices=Status.choices, default=Status.UPLOADED
+    )
 
     class Meta:
         ordering = ("name",)
