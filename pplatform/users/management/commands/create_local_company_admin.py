@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand, CommandError
 
-from pplatform.catalog.models import Company
+from pplatform.users.models import Company
 
 User = get_user_model()
 
