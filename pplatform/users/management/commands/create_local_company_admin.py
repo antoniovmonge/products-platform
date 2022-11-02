@@ -15,7 +15,7 @@ class Command(BaseCommand):
     `docker-compose -f local.yml run --rm django python manage.py create_instructor`
     """
 
-    help = "Seed database with an 'COMPANY_ADMIN' user"
+    help = "Seed database with a 'COMPANY_ADMIN' user"
 
     def handle(self, *args, **options):
 
