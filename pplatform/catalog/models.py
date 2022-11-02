@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 
-# from django.contrib.auth import get_user_model
+# Models
 from pplatform.users.models import Company, CustomUser
 
 
@@ -26,6 +26,16 @@ class Category(models.Model):
         return self.name
 
 
+class PublishedManager(models.Manager):
+    """
+    This class is a manager to retrieve Products as:
+    'Product.published.all()'
+    """
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Product.Status.PUBLISHED)
+
+
 class Product(models.Model):
     class Status(models.TextChoices):
         UPLOADED = "UP", "Uploaded"
@@ -42,7 +52,7 @@ class Product(models.Model):
         Company, related_name="products", on_delete=models.CASCADE
     )
     name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, db_index=True, unique_for_date="publish")
     created_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -53,20 +63,25 @@ class Product(models.Model):
     image = models.ImageField(upload_to="products/%Y/%m/%d", blank=True)
     description = models.TextField(blank=True)
     # price = models.DecimalField(max_digits=10, decimal_places=2)
-    published = models.DateTimeField(default=timezone.now)
+    publish = models.DateTimeField(default=timezone.now)
     verified = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(
         max_length=2, choices=Status.choices, default=Status.UPLOADED
     )
+    objects = models.Manager()
+    published = PublishedManager()
 
     class Meta:
         ordering = ("name",)
         index_together = (("id", "slug"),)
 
     def get_absolute_url(self):
-        return reverse("catalog:product_detail", args=[self.id, self.slug])
+        return reverse(
+            "catalog:product_detail",
+            args=[self.publish.year, self.publish.month, self.publish.day, self.slug],
+        )
 
     def __str__(self):
         return self.name

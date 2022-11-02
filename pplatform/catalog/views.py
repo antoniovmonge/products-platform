@@ -19,7 +19,8 @@ def product_list(request, category_slug=None, company_slug=None):
     categories = Category.objects.annotate(total_products=Count("products"))
     company = None
     companies = Company.objects.annotate(total_products=Count("products"))
-    products = Product.objects.filter(verified=True)
+    # products = Product.objects.filter(verified=True)
+    products = Product.published.all()
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
@@ -41,8 +42,15 @@ def product_list(request, category_slug=None, company_slug=None):
     return render(request, "catalog/product/list.html", context)
 
 
-def product_detail(request, id, slug):
-    product = get_object_or_404(Product, id=id, slug=slug, verified=True)
+def product_detail(request, year, month, day, slug):
+    product = get_object_or_404(
+        Product,
+        # id=id,
+        slug=slug,
+        publish__year=year,
+        publish__month=month,
+        publish__day=day,
+    )
 
     # SELECTION is for adding to the comparison list
     selection_product_form = SelectionAddProductForm()
