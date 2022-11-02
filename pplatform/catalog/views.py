@@ -12,6 +12,7 @@ from pplatform.selection.forms import SelectionAddProductForm
 from pplatform.selection.selection import Selection
 
 from .models import Category, Company, Content, Product
+from .utils import paginate_products, search_products
 
 
 def product_list(request, category_slug=None, company_slug=None):
@@ -20,13 +21,18 @@ def product_list(request, category_slug=None, company_slug=None):
     company = None
     companies = Company.objects.annotate(total_products=Count("products"))
     # products = Product.objects.filter(verified=True)
-    products = Product.published.all()
+    product_list = Product.published.all()
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
-    if company_slug:
+        products = product_list.filter(category=category)
+    elif company_slug:
         company = get_object_or_404(Company, slug=company_slug)
-        products = products.filter(company=company)
+        products = product_list.filter(company=company)
+    else:
+        products = product_list
+
+    products, search_query = search_products(request)
+    custom_range, products = paginate_products(request, products, 25)
     # Add selection to be able to check if the products are
     # already selected for comparison.
     selection = Selection(request)
@@ -38,6 +44,8 @@ def product_list(request, category_slug=None, company_slug=None):
         "companies": companies,
         "products": products,
         "selection_list": selection_list,
+        "search_query": search_query,
+        "custom_range": custom_range,
     }
     return render(request, "catalog/product/list.html", context)
 

@@ -79,6 +79,20 @@
   </div>
   <!-- End Sidebar -->
   <div class="col-9">
+    <!-- Searchbar -->
+
+      <form class="d-flex" action="{% url 'catalog:product_list' %}" method="get" role="search">
+        <div class="input-goup">
+          <div class="form-outline">
+            <label class="form-label" for="formInput#search">Search by ... </label>
+            <input class="form-control" id="formInput#search" type="text" name="search_query"
+              placeholder="Search" value="{{search_query}}" />
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" value="Search">Search</button>
+      </form>
+
+    <!-- END Searchbar -->
     <h1>
       {% if category %}
       {{ category.name|capfirst }}
@@ -129,6 +143,7 @@
         </div>
       </div>
       {% endfor %}
+      {% include 'pagination.html' with queryset=products custom_range=custom_range %}
     </div>
   </div>
 </div>
