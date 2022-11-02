@@ -82,7 +82,7 @@ class CompanyOwnerProductMixin(
     CompanyOwnerMixin, LoginRequiredMixin, PermissionRequiredMixin
 ):
     model = Product
-    fields = ["category", "name", "image", "description"]
+    fields = ["category", "name", "description"]
     success_url = reverse_lazy("catalog:manage_product_list")
 
 

@@ -1,0 +1,122 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "name": "worktops",
+    "slug": "worktops"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "name": "aggregates",
+    "slug": "aggregates"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 3,
+  "fields": {
+    "name": "glass",
+    "slug": "glass"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "company": 1,
+    "name": "Silestone, Polaris",
+    "slug": "silestone-polaris",
+    "created_by": 3,
+    "image": "products/2022/11/02/Silestone_Polaris_RoRAfda.jpg",
+    "description": "Lorem ipsum",
+    "published": "2022-11-02T11:19:03Z",
+    "verified": true,
+    "created": "2022-11-02T11:19:44.158Z",
+    "updated": "2022-11-02T11:19:44.158Z",
+    "status": "PB"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "category": 2,
+    "company": 1,
+    "name": "Cement 1",
+    "slug": "cement-1",
+    "created_by": 3,
+    "image": "products/2022/11/02/shutterstock_2062504613-min-scaled.jpg",
+    "description": "adpojg[padsgpakdagadsfa",
+    "published": "2022-11-02T11:19:47Z",
+    "verified": true,
+    "created": "2022-11-02T11:20:24.231Z",
+    "updated": "2022-11-02T11:20:24.231Z",
+    "status": "PB"
+  }
+},
+{
+  "model": "catalog.content",
+  "pk": 1,
+  "fields": {
+    "product": 1,
+    "content_type": 5,
+    "object_id": 1
+  }
+},
+{
+  "model": "catalog.content",
+  "pk": 2,
+  "fields": {
+    "product": 1,
+    "content_type": 4,
+    "object_id": 1
+  }
+},
+{
+  "model": "catalog.content",
+  "pk": 3,
+  "fields": {
+    "product": 2,
+    "content_type": 4,
+    "object_id": 2
+  }
+},
+{
+  "model": "catalog.text",
+  "pk": 1,
+  "fields": {
+    "company": 1,
+    "title": "Lorem",
+    "created": "2022-11-02T11:21:23.276Z",
+    "updated": "2022-11-02T11:21:23.276Z",
+    "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit mollis purus, augue habitant ultrices vestibulum pharetra himenaeos parturient fringilla, arcu libero ad neque nec metus malesuada donec. Magnis egestas enim nam tellus interdum est quam lobortis elementum lacus sodales habitant, tincidunt et bibendum faucibus vestibulum euismod montes conubia justo nulla viverra. Nulla lectus risus vulputate id nec platea congue sociosqu justo, nullam est nibh aliquet condimentum vel cubilia scelerisque primis nunc, litora nisl malesuada parturient turpis et placerat maecenas.\r\n\r\nDuis feugiat tincidunt ut malesuada nibh libero odio ornare ultricies fermentum, posuere sagittis vestibulum turpis laoreet dis phasellus parturient. Lectus nisl iaculis mattis dui per curae nunc molestie, cursus velit morbi porttitor fusce blandit enim, aliquet sed mus at in ut ultricies. Cubilia nostra etiam vehicula maecenas nulla eleifend turpis est, parturient litora himenaeos gravida quis vulputate sollicitudin ligula, nullam massa lectus cras imperdiet platea condimentum."
+  }
+},
+{
+  "model": "catalog.image",
+  "pk": 1,
+  "fields": {
+    "company": 1,
+    "title": "What an image",
+    "created": "2022-11-02T11:21:47.357Z",
+    "updated": "2022-11-02T11:21:47.357Z",
+    "file": "images/Matrix-Neo-Quotes-Finger.jpg"
+  }
+},
+{
+  "model": "catalog.image",
+  "pk": 2,
+  "fields": {
+    "company": 1,
+    "title": "PHOTOOOOO",
+    "created": "2022-11-02T11:22:21.033Z",
+    "updated": "2022-11-02T11:22:21.033Z",
+    "file": "images/Elliot_Alderson.jpg"
+  }
+}
+]
