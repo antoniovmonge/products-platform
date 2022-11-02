@@ -53,7 +53,7 @@ Create a new product
       </div>
     </div>
     <br>
-
+    {% if object.contents %}
     {% for content in object.contents.all %}
     {% with item=content.item %}
     <div class="card">
@@ -75,6 +75,7 @@ Create a new product
     {% empty %}
     <p>This product has no contents yet.</p>
     {% endfor %}
+    {% endif %}
 
 
   </div>
