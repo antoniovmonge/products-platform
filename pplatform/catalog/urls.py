@@ -16,7 +16,12 @@ urlpatterns = [
         views.product_list,
         name="product_list_by_company",
     ),
-    path("product/<int:id>/<slug:slug>/", views.product_detail, name="product_detail"),
+    # path("product/<int:id>/<slug:slug>/", views.product_detail, name="product_detail"),
+    path(
+        "product/<int:year>/<int:month>/<int:day>/<slug:slug>/",
+        views.product_detail,
+        name="product_detail",
+    ),
     path(
         "my-products/",
         views.ManageProductListView.as_view(),
