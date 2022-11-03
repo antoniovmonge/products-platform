@@ -4,18 +4,18 @@ from django.db.models import Q
 from .models import Product
 
 
-def paginate_products(request, projects, results):
+def paginate_products(request, products, results):
     page = request.GET.get("page")
-    paginator = Paginator(projects, results)
+    paginator = Paginator(products, results)
 
     try:
-        projects = paginator.page(page)
+        products = paginator.page(page)
     except PageNotAnInteger:
         page = 1
-        projects = paginator.page(page)
+        products = paginator.page(page)
     except EmptyPage:
         page = paginator.num_pages
-        projects = paginator.page(page)
+        products = paginator.page(page)
 
     leftIndex = int(page) - 1
 
@@ -29,7 +29,7 @@ def paginate_products(request, projects, results):
 
     custom_range = range(leftIndex, rightIndex)
 
-    return custom_range, projects
+    return custom_range, products
 
 
 def search_products(request):
@@ -38,10 +38,11 @@ def search_products(request):
     if request.GET.get("search_query"):
         search_query = request.GET.get("search_query")
 
-    products = Product.objects.distinct().filter(
+    products = Product.published.distinct().filter(
         Q(name__icontains=search_query)
-        | Q(company__name__icontains=search_query)  # |
-        # Q(product_type__name__icontains=search_query) |
+        | Q(description__icontains=search_query)
+        | Q(company__name__icontains=search_query)
+        | Q(category__name__icontains=search_query)  # |
         # Q(material_types__name__icontains=search_query)
     )
 

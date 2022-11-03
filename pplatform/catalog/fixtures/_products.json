@@ -37,8 +37,8 @@
     "publish": "2022-11-02T11:19:03Z",
     "verified": true,
     "created": "2022-11-02T11:19:44.158Z",
-    "updated": "2022-11-03T16:01:32.363Z",
-    "status": "UP"
+    "updated": "2022-11-02T11:19:44.158Z",
+    "status": "PB"
   }
 },
 {
@@ -56,60 +56,6 @@
     "verified": true,
     "created": "2022-11-02T11:20:24.231Z",
     "updated": "2022-11-02T11:20:24.231Z",
-    "status": "PB"
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 3,
-  "fields": {
-    "category": 1,
-    "company": 1,
-    "name": "other one",
-    "slug": "cosentino-other-one",
-    "created_by": null,
-    "image": "",
-    "description": "adsfsedf",
-    "publish": "2022-11-03T14:24:45.428Z",
-    "verified": false,
-    "created": "2022-11-03T14:24:45.440Z",
-    "updated": "2022-11-03T15:38:23.548Z",
-    "status": "PB"
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 4,
-  "fields": {
-    "category": 1,
-    "company": 1,
-    "name": "other one 22",
-    "slug": "cosentino-other-one-22",
-    "created_by": null,
-    "image": "",
-    "description": "asdfasdfa",
-    "publish": "2022-11-03T14:24:54.052Z",
-    "verified": false,
-    "created": "2022-11-03T14:24:54.061Z",
-    "updated": "2022-11-03T15:38:23.553Z",
-    "status": "PB"
-  }
-},
-{
-  "model": "catalog.product",
-  "pk": 5,
-  "fields": {
-    "category": 1,
-    "company": 1,
-    "name": "asdfaadsf",
-    "slug": "cosentino-asdfaadsf",
-    "created_by": null,
-    "image": "",
-    "description": "adsfsdfasdf",
-    "publish": "2022-11-03T14:25:02.739Z",
-    "verified": false,
-    "created": "2022-11-03T14:25:02.748Z",
-    "updated": "2022-11-03T15:38:23.539Z",
     "status": "PB"
   }
 },

@@ -14,7 +14,7 @@
 
 {% block content %}
 <div class="row gx-5">
-  <!-- Sidebar -->
+  <!-- SIDEBAR -->
   <div class="col-3 p-3 text-white bg-dark">
     <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <span class="fs-4">CATEGORIES</span>
@@ -78,21 +78,29 @@
     </ul>
   </div>
   <!-- End Sidebar -->
+
+  <!-- Main Content -->
   <div class="col-9">
-    <!-- Searchbar -->
 
-      <form class="d-flex" action="{% url 'catalog:product_list' %}" method="get" role="search">
-        <div class="input-goup">
-          <div class="form-outline">
-            <label class="form-label" for="formInput#search">Search by ... </label>
-            <input class="form-control" id="formInput#search" type="text" name="search_query"
-              placeholder="Search" value="{{search_query}}" />
+    <!-- ROW FOR SEARCHBAR -->
+    <div class="row">
+      <div class="col">
+        <!-- SEARCHBAR -->
+        <form action="{% url 'catalog:product_list' %}" method="get" role="search">
+          <div class="input-group mb-3">
+              <!-- <label class="form-label" for="formInput#search">Search by ... </label> -->
+              <input class="form-control" id="formInput#search" type="text" name="search_query"
+                placeholder="Search by product, company, categories..." value="{{search_query}}" />
+              <button class="btn btn-outline-secondary" type="button" id="formInput#search">Search</button>
           </div>
-        </div>
-        <button class="btn btn-primary" type="submit" value="Search">Search</button>
-      </form>
+        </form>
+        <!-- END Searchbar -->
+      </div>
+      <div class="col">
+        <!-- Empty col to the right of the searchbar -->
+      </div>
+    </div>
 
-    <!-- END Searchbar -->
     <h1>
       {% if category %}
       {{ category.name|capfirst }}
@@ -103,11 +111,14 @@
       {% endif %}
     </h1>
     <br>
+
+    <!-- PRODUCT CARDS SECTION -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
       {% for product in products %}
       <div class="col">
         <div class="card h-100">
 
+          <!-- ADD TO SELECTION BUTTON SECTION -->
           <div class="card-header">
             {% if product.slug in selection_list %}
             <form action="{% url 'selection:selection_remove' product.id %}"
@@ -123,6 +134,7 @@
             </form>
             {% endif %}
           </div>
+          <!-- END add to selection buttons -->
 
           <a href="{{ product.get_absolute_url }}">
             {% if product.image %}
@@ -131,20 +143,31 @@
             <img src="{% static 'images/no_image.png' %}" class="card-img-top" style="height: 170px; object-fit: cover;">
             {% endif %}
           </a>
-          <a href="{{ product.get_absolute_url }}">
+
             <div class="card-body">
-              <h5 class="card-title">{{ product.name|capfirst }}</h5>
+
+              <h3 class="card-title">
+                <a href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
+              </h3>
+
+              <p class="card-text">
+                Category: <a href="{{ product.category.get_absolute_url }}">{{product.category|capfirst}}</a> <br>
+                Company: <a href="{{ product.company.get_absolute_url }}">{{product.company|capfirst}}</a>
+              </p>
               {% if product.description %}
-              <p class="card-text">{{product.description|truncatechars:20}}</p>
+              <p class="card-text">
+                <a href="{{ product.get_absolute_url }}">{{product.description|truncatechars:60}}</a>
+              </p>
               {% endif %}
             </div>
-          </a>
+
 
         </div>
       </div>
       {% endfor %}
-      {% include 'pagination.html' with queryset=products custom_range=custom_range %}
     </div>
+    <br>
+    {% include 'pagination.html' with queryset=products custom_range=custom_range %}
   </div>
 </div>
 {% endblock %}
