@@ -42,7 +42,7 @@ def product_list(request, category_slug=None, company_slug=None):
         products = products.filter(company=company)
 
     # Paginator
-    custom_range, products = paginate_products(request, products, 3)
+    custom_range, products = paginate_products(request, products, 12)
 
     # Add selection to be able to check if the products are
     # already selected for comparison.
