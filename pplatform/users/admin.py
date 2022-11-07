@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from pplatform.users.forms import CustomUserChangeForm, CustomUserCreationForm
-from pplatform.users.models import CustomUser
+from pplatform.users.models import Company, CustomUser
 
 
 # @admin.register(CustomUser)
@@ -57,3 +57,10 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+@admin.register(Company)
+class CompanyAdmin(admin.ModelAdmin):
+    list_display = ["name", "slug"]
+    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ["name"]

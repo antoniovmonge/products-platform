@@ -71,6 +71,7 @@
   </div>
 
       <div class="col">
+        {% if product.contents.all %}
         <div class="card">
           <div class="card-body">
             {% for content in product.contents.all %}
@@ -91,6 +92,7 @@
             {% endfor %}
           </div>
         </div>
+        {% endif %}
       </div>
 
 </div>

@@ -8,7 +8,10 @@ set -o nounset
 python manage.py migrate
 
 python manage.py create_local_user_and_admin
-python manage.py create_local_company
+# python manage.py create_local_company
+python manage.py runscript load_companies_from_csv
 python manage.py create_local_company_admin
-python manage.py loaddata products.json
+# python manage.py loaddata products.json
+python manage.py runscript load_categories_from_csv
+python manage.py runscript load_products_csv
 uvicorn config.asgi:application --host 0.0.0.0 --reload --reload-include '*.html'

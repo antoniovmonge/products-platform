@@ -52,7 +52,11 @@ class Product(models.Model):
         Company, related_name="products", on_delete=models.CASCADE
     )
     name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, db_index=True, unique_for_date="publish")
+    slug = models.SlugField(
+        max_length=200,
+        unique_for_date="publish",
+        db_index=True,
+    )
     created_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -90,6 +94,81 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.company.name + "-" + self.name)
         super().save(*args, **kwargs)
+
+
+class ProductDetail(models.Model):
+    DECLARED_UNIT_CHOICES = [
+        ("m", "meter"),
+        ("m3", "m3"),
+        ("m2", "m2"),
+        ("kg", "kg"),
+        ("piece", "piece"),
+    ]
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, primary_key=True)
+    declared_unit = models.CharField(
+        max_length=64,
+        null=True,
+        choices=DECLARED_UNIT_CHOICES,
+        default="m2",
+        verbose_name="Declared unit",
+    )
+    total_co2e_kg_mf = models.FloatField(
+        blank=True, null=True, verbose_name="Total CO2e [kg]"
+    )
+    total_biogenic_co2e = models.FloatField(
+        blank=True, null=True, verbose_name="Total Biogenic CO2e [kg]"
+    )
+    carbon_sorting = models.FloatField(
+        blank=True, null=True, verbose_name="Carbon Sorting"
+    )
+    # unit_sorting = models.CharField(
+    #     max_length=64, null=True, blank=True, verbose_name="Unit Sorting"
+    # )
+    # estimated_carbon = models.BooleanField(
+    #     default=False, verbose_name="Estimated Carbon"
+    # )
+    water_use_kg = models.FloatField(
+        blank=True, null=True, verbose_name="Water Use [kg]"
+    )
+    use_and_maintenance = models.FloatField(
+        blank=True, null=True, verbose_name="Use & Maintenance (B1-B5) [kg]"
+    )
+    # data_source = models.CharField(
+    #     max_length=128, null=True, blank=True, verbose_name="Data Source"
+    # )
+    end_of_life = models.FloatField(
+        blank=True,
+        null=True,
+        verbose_name="End of Life excluding transport (C1, C3, C4) [kg]",
+    )
+    recycled_content = models.FloatField(
+        blank=True, null=True, verbose_name="Recycled Content [%]"
+    )
+    recyclable_content = models.FloatField(
+        blank=True, null=True, verbose_name="Recyclable Content [%]"
+    )
+    reuse_potential = models.FloatField(
+        blank=True, null=True, verbose_name="Re-use Potential [%]"
+    )
+    odp = models.FloatField(blank=True, null=True, verbose_name="ODP")
+    manufacturing = models.FloatField(
+        blank=True, null=True, verbose_name="Manufacturing (A1-A3) [kg]"
+    )
+    on_site_installation = models.FloatField(
+        blank=True, null=True, verbose_name="On-site Installation (A5) [kg]"
+    )
+    # transport_to_site = models.FloatField(
+    #     blank=True, null=True, verbose_name="Transport to Site (A4) [kg]"
+    # )
+    energy_recovery_possibility = models.FloatField(
+        blank=True, null=True, verbose_name="Energy Recovery Possibility [%]"
+    )
+
+    class Meta:
+        ordering = ("product",)
+
+    def __str__(self):
+        return f"Product: {self.product.name}, details"
 
 
 class Content(models.Model):

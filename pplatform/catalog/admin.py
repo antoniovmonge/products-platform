@@ -1,12 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Company, Product
-
-
-@admin.register(Company)
-class CompanyAdmin(admin.ModelAdmin):
-    list_display = ["name", "slug"]
-    prepopulated_fields = {"slug": ("name",)}
+from .models import Category, Product, ProductDetail
 
 
 @admin.register(Category)
@@ -36,3 +30,9 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     raw_id_fields = ["company", "created_by"]
     date_hierarchy = "updated"
+
+
+@admin.register(ProductDetail)
+class ProductDetailAdmin(admin.ModelAdmin):
+    list_display = ["product", "declared_unit"]
+    list_filter = ("declared_unit",)
