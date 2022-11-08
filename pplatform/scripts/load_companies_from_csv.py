@@ -5,12 +5,13 @@ To run this script:
 docker-compose -f local.yml run --rm django python manage.py runscript load_products_csv
 """
 import csv
+from datetime import datetime
 
 from django.template.defaultfilters import slugify
 
 from pplatform.catalog.models import Company
 
-CSV_FILENAME = "pplatform/data/products_df_small.csv"
+CSV_FILENAME = "pplatform/data/products_df.csv"
 list_company_names = []
 companies_to_create = []
 
@@ -25,7 +26,10 @@ def run():
                     list_company_names.append(company_name)
                     print("xxx => Repeated")
                 else:
-                    company = Company(name=company_name, slug=slugify(company_name))
+                    company = Company(
+                        name=company_name,
+                        slug=slugify(f"{company_name}{datetime.now().time()}"),
+                    )
                     companies_to_create.append(company)
 
                     list_company_names.append(company_name)

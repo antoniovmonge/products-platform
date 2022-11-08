@@ -40,7 +40,10 @@
                 {% else %}
                 <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
                 {% endif %}
-                  <p>All</p>
+                <div class="row justify-content-between">
+                  <div class="col"><p>All</p></div>
+                  <div class="col text-end"><p>{{total_products|length}} product{{total_products|length|pluralize}}</p></div>
+                </div>
                 </a>
               </li>
               {% for c in categories %}
@@ -83,7 +86,10 @@
                 {% else %}
                 <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
                 {% endif %}
-                  <p>All</p>
+                <div class="row justify-content-between">
+                  <div class="col"><p>All</p></div>
+                  <div class="col text-end"><p>{{total_products|length}} product{{total_products|length|pluralize}}</p></div>
+                </div>
                 </a>
               </li>
               {% for c in companies %}
