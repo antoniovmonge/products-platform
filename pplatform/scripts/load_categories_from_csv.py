@@ -10,7 +10,7 @@ from django.template.defaultfilters import slugify
 
 from pplatform.catalog.models import Category
 
-CSV_FILENAME = "pplatform/data/products_df_small.csv"
+CSV_FILENAME = "pplatform/data/products_df.csv"
 categories_on_list = []
 categories_to_create = []
 

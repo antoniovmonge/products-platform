@@ -25,7 +25,7 @@ def product_list(request, category_slug=None, company_slug=None):
     companies = Company.objects.annotate(
         total_products=Count("products", filter=Q(products__status="PB"))
     )
-    # products = Product.objects.filter(verified=True)
+    total_products = Product.published.all()
 
     # THE NEXT LINE IS INCLUDED IN "utils.py" UNDER THE "search_products()" function
     # products = Product.published.all()
@@ -57,6 +57,7 @@ def product_list(request, category_slug=None, company_slug=None):
         "selection_list": selection_list,
         "search_query": search_query,
         "custom_range": custom_range,
+        "total_products": total_products,
     }
     return render(request, "catalog/product/list.html", context)
 

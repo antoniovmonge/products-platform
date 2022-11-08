@@ -14,4 +14,5 @@ python manage.py create_local_company_admin
 # python manage.py loaddata products.json
 python manage.py runscript load_categories_from_csv
 python manage.py runscript load_products_csv
+python manage.py runscript load_product_details_csv
 uvicorn config.asgi:application --host 0.0.0.0 --reload --reload-include '*.html'
