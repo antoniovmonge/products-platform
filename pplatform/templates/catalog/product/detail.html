@@ -70,30 +70,144 @@
     </div>
   </div>
 
-      <div class="col">
-        {% if product.contents.all %}
-        <div class="card">
-          <div class="card-body">
-            {% for content in product.contents.all %}
-              {% with item=content.item %}
-              <!-- <div class="row justify-content-between">
-                <div class="col"> -->
-                  <h4 class="card-title">{{ item.title|capfirst }}</h4>
-                <!-- </div>
-                <div class="col text-end">
-                  <h6 class="card-subtitle text-muted">{{ item|model_name|capfirst }}</h6>
-                </div>
-              </div> -->
-              <!-- Item rendered -->
-              {{item.render}}
-              <!-- End item rendered -->
-              <br>
-              {% endwith %}
-            {% endfor %}
-          </div>
-        </div>
-        {% endif %}
+  <div class="col">
+    {% if product.contents.all %}
+    <div class="card">
+      <div class="card-body">
+        {% for content in product.contents.all %}
+          {% with item=content.item %}
+          <!-- <div class="row justify-content-between">
+            <div class="col"> -->
+              <h4 class="card-title">{{ item.title|capfirst }}</h4>
+            <!-- </div>
+            <div class="col text-end">
+              <h6 class="card-subtitle text-muted">{{ item|model_name|capfirst }}</h6>
+            </div>
+          </div> -->
+          <!-- Item rendered -->
+          {{item.render}}
+          <!-- End item rendered -->
+          <br>
+          {% endwith %}
+        {% endfor %}
       </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="col">
+    {% if product.productdetail %}
+    <div class="card">
+      <div class="card-body">
+        {% with details=product.productdetail %}
+        <table class="table table-hover table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Details for product:</th>
+              <th scope="col">{{details.product|upper}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Declared unit</th>
+              <td>by {{details.declared_unit|default_if_none:"-"}} of product</td>
+            </tr>
+            <tr>
+              <th scope="row">Total CO2e</th>
+              {% if details.total_co2e_kg_mf %}
+              <td>{{details.total_co2e_kg_mf|floatformat:"2g"}} kg</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Total Biogenic CO2e</th>
+              {% if details.total_biogenic_co2e %}
+              <td>{{details.total_biogenic_co2e|floatformat:"2g"}} kg</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Water Use</th>
+              {% if details.water_use_kg %}
+              <td>{{details.water_use_kg|floatformat:"2g"}} kg</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Use & Maintenance (B1-B5)</th>
+              {% if details.use_and_maintenance %}
+              <td>{{details.use_and_maintenance|floatformat:"2g"}} by {{details.declared_unit}} kg</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Recycled Content</th>
+              {% if details.recycled_content %}
+              <td>{{details.recycled_content|floatformat:"2g"}}%</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Recyclable Content</th>
+              {% if details.recyclable_content %}
+              <td>{{details.recyclable_content|floatformat:"2g"}}%</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Re-use Potential</th>
+              {% if details.reuse_potential %}
+              <td>{{details.reuse_potential|floatformat:"2g"}}%</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Ozone Depletion Potential</th>
+              {% if details.odp %}
+              <td>{{details.odp|floatformat:"2g"}} mg CFC-11eq</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Manufacturing (A1-A3)</th>
+              {% if details.manufacturing %}
+              <td>{{details.manufacturing|floatformat:"2g"}} kg</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">On-site Installation (A5)</th>
+              {% if details.on_site_installation %}
+              <td>{{details.on_site_installation|floatformat:"2g"}} kg</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+            <tr>
+              <th scope="row">Energy Recovery Possibility</th>
+              {% if details.energy_recovery_possibility %}
+              <td>{{details.energy_recovery_possibility|floatformat:"2g"}}%</td>
+              {% else %}
+              <td>-</td>
+              {% endif %}
+            </tr>
+          </tbody>
+        </table>
+
+        {% endwith %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
 
 </div>
 
