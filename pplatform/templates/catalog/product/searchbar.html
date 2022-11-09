@@ -1,0 +1,8 @@
+<form action="{% url 'catalog:product_list' %}" method="get" role="search">
+  <div class="input-group mb-3">
+    <!-- <label class="form-label" for="formInput#search">Search by ... </label> -->
+    <input class="form-control" id="formInput#search" type="text" name="search_query"
+      placeholder="Search by product, company, categories..." value="{{search_query}}" />
+    <button class="btn btn-outline-secondary" type="button" id="formInput#search">Search</button>
+  </div>
+</form>

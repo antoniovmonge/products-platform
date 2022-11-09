@@ -2,142 +2,112 @@
 {% load static %}
 {% block title %}
 
-  {% if category %}
-  {{ category.name }}
-  {% elif company %}
-  {{ company.name }}
-  {% else %}
-  Products
-  {% endif %}
+{% if category %}
+{{ category.name }}
+{% elif company %}
+{{ company.name }}
+{% else %}
+Products
+{% endif %}
 
 {% endblock title %}
 
 {% block content %}
-<div class="row gx-5">
-  <!-- SIDEBAR -->
-  <div class="col-3 p-3 text-white bg-dark">
-    <!-- ACCORDION -->
-    <div class="accordion" id="accordionSidebar">
-      <!-- Categories Section -->
-      <div class="accordion-item bg-dark">
-        <h2 class="accordion-header" id="headingOne">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseOne"
-            aria-expanded="false"
-            aria-controls="collapseOne">
-            CATEGORIES
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionSidebar">
-          <div class="accordion-body">
-            <ul class="nav nav-pills flex-column mb-auto">
-              <li class="nav-item">
-                {% if not category %}
-                <a href="{% url 'catalog:product_list' %}" class="nav-link active">
-                {% else %}
-                <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
-                {% endif %}
-                <div class="row justify-content-between">
-                  <div class="col"><p>All</p></div>
-                  <div class="col text-end"><p>{{total_products|length}} product{{total_products|length|pluralize}}</p></div>
-                </div>
-                </a>
-              </li>
+<div class="row">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu scrollable-menu">
               {% for c in categories %}
-              <li class="nav-item">
+              <li>
                 {% if category.slug == c.slug %}
-                <a href="{{ c.get_absolute_url }}" class="nav-link active">
+                <a class="dropdown-item active" href="{{ c.get_absolute_url }}">
                 {% else %}
-                <a href="{{ c.get_absolute_url }}" class="nav-link text-white">
+                <a class="dropdown-item" href="{{ c.get_absolute_url }}">
                 {% endif %}
-                <div class="row justify-content-between">
-                  <div class="col"><p>{{ c.name|capfirst }}</p></div>
-                  <div class="col text-end"><p>{{c.total_products}} product{{c.total_products|pluralize}}</p></div>
-                </div>
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- Companies Section -->
-      <div class="accordion-item bg-dark">
-        <h2 class="accordion-header" id="headingTwo">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseTwo"
-            aria-expanded="false"
-            aria-controls="collapseTwo">
-            COMPANIES
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionSidebar">
-          <div class="accordion-body">
-            <ul class="nav nav-pills flex-column mb-auto">
-              <li class="nav-item">
-                {% if not company %}
-                <a href="{% url 'catalog:product_list' %}" class="nav-link active">
-                {% else %}
-                <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
-                {% endif %}
-                <div class="row justify-content-between">
-                  <div class="col"><p>All</p></div>
-                  <div class="col text-end"><p>{{total_products|length}} product{{total_products|length|pluralize}}</p></div>
-                </div>
-                </a>
-              </li>
-              {% for c in companies %}
-              <li class="nav-item">
-                {% if company.slug == c.slug %}
-                <a href="{{ c.get_absolute_url }}" class="nav-link active">
-                {% else %}
-                <a href="{{ c.get_absolute_url }}" class="nav-link text-white">
-                {% endif %}
-                  <div class="row justify-content-between">
-                    <div class="col"><p>{{ c.name|capfirst }}</p></div>
-                    <div class="col text-end"><p>{{c.total_products}} product{{c.total_products|pluralize}}</p></div>
+                <div class="row">
+                  <div class="col">
+                    {{ c.name|capfirst }}
                   </div>
+                  <div class="col text-end">
+                    {{c.total_products}} product{{c.total_products|pluralize}}
+                  </div>
+                </div>
                 </a>
               </li>
               {% endfor %}
             </ul>
-
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Companies
+            </a>
+            <ul class="dropdown-menu scrollable-menu">
+              {% for c in companies %}
+              <li>
+                {% if company.slug == c.slug %}
+                <a class="dropdown-item active" href="{{ c.get_absolute_url }}">
+                  {% else %}
+                  <a class="dropdown-item" href="{{ c.get_absolute_url }}">
+                    {% endif %}
+                    <div class="row">
+                      <div class="col">
+                        {{ c.name|capfirst|truncatechars:25 }}
+                      </div>
+                      <div class="col text-end">
+                        {{c.total_products}} product{{c.total_products|pluralize}}
+                      </div>
+                    </div>
+                  </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" action="{% url 'catalog:product_list' %}" method="get" role="search">
+          <div class="input-group me-2">
+            <!-- <label class="form-label" for="formInput#search">Search by ... </label> -->
+            <input class="form-control" id="formInput#search" type="text" name="search_query"
+              placeholder="Search by product, company, categories..." value="{{search_query}}" />
+            <button class="btn btn-outline-secondary" type="button" id="formInput#search">Search</button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
-    <!-- END ACCORDION -->
-  </div>
+  </nav>
+</div>
+<div class="row gx-5">
+  <!-- SIDEBAR -->
+  {% comment %}
+  {% include 'catalog/product/sidebar.html' %}
+  {% endcomment %}
   <!-- End Sidebar -->
 
   <!-- Main Content -->
   <div class="col-9">
 
     <!-- ROW FOR SEARCHBAR -->
+    {% comment %}
     <div class="row">
       <div class="col">
         <!-- SEARCHBAR -->
-        <form action="{% url 'catalog:product_list' %}" method="get" role="search">
-          <div class="input-group mb-3">
-              <!-- <label class="form-label" for="formInput#search">Search by ... </label> -->
-              <input class="form-control" id="formInput#search" type="text" name="search_query"
-                placeholder="Search by product, company, categories..." value="{{search_query}}" />
-              <button class="btn btn-outline-secondary" type="button" id="formInput#search">Search</button>
-          </div>
-        </form>
+        {% include 'catalog/product/searchbar.html' %}
         <!-- END Searchbar -->
       </div>
       <div class="col">
         <!-- Empty col to the right of the searchbar -->
       </div>
     </div>
-
+    {% endcomment %}
     <h1>
       {% if category %}
       {{ category.name|capfirst }}
@@ -177,26 +147,27 @@
             {% if product.image %}
             <img src="{{ product.image.url }}" class="card-img-top" style="height: 170px; object-fit: cover;">
             {% else %}
-            <img src="{% static 'images/no_image.png' %}" class="card-img-top" style="height: 170px; object-fit: cover;">
+            <img src="{% static 'images/no_image.png' %}" class="card-img-top"
+              style="height: 170px; object-fit: cover;">
             {% endif %}
           </a>
 
-            <div class="card-body">
+          <div class="card-body">
 
-              <h3 class="card-title">
-                <a href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
-              </h3>
+            <h3 class="card-title">
+              <a href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
+            </h3>
 
-              <p class="card-text">
-                Category: <a href="{{ product.category.get_absolute_url }}">{{product.category|capfirst}}</a> <br>
-                Company: <a href="{{ product.company.get_absolute_url }}">{{product.company|capfirst}}</a>
-              </p>
-              {% if product.description %}
-              <p class="card-text">
-                <a href="{{ product.get_absolute_url }}">{{product.description|truncatechars:60}}</a>
-              </p>
-              {% endif %}
-            </div>
+            <p class="card-text">
+              Category: <a href="{{ product.category.get_absolute_url }}">{{product.category|capfirst}}</a> <br>
+              Company: <a href="{{ product.company.get_absolute_url }}">{{product.company|capfirst}}</a>
+            </p>
+            {% if product.description %}
+            <p class="card-text">
+              <a href="{{ product.get_absolute_url }}">{{product.description|truncatechars:60}}</a>
+            </p>
+            {% endif %}
+          </div>
 
 
         </div>
