@@ -168,7 +168,7 @@ class ProductDetail(models.Model):
         ordering = ("product",)
 
     def __str__(self):
-        return f"Product: {self.product.name}, details"
+        return f"Details for product: '{self.product.name}'"
 
 
 class Content(models.Model):

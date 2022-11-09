@@ -25,20 +25,20 @@ def run():
 
             for row in reader:
                 product_name = row.get("NAME")
-                category_name = row.get("Material_type").strip("'[]")
-                image_new_path = row.get("image_path")[7:]
-                product = Product(
-                    name=product_name,
-                    slug=slugify(f"{product_name}{datetime.now().time()}"),
-                    company=Company.objects.get(name=row.get("Company")),
-                    category=Category.objects.get(name=category_name),
-                    status="PB",  # Published
-                    image=f"products/{image_new_path}",
-                )
-                if product.name in product_names_list:
+                if product_name in product_names_list:
                     print("already in db")
                 else:
-                    product_names_list.append(product.name)
+                    product_names_list.append(product_name)
+                    category_name = row.get("Material_type").strip("'[]")
+                    image_new_path = row.get("image_path")[7:]
+                    product = Product(
+                        name=product_name,
+                        slug=slugify(f"{product_name}{datetime.now().time()}"),
+                        company=Company.objects.get(name=row.get("Company")),
+                        category=Category.objects.get(name=category_name),
+                        status="PB",  # Published
+                        image=f"products/{image_new_path}",
+                    )
                     create_array_products.append(product)
                     print(product.name)
 
