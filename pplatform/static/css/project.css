@@ -22,9 +22,9 @@ a:hover {
   color: black;
 }
 
-.nav-link {
+/* .nav-link {
   padding: 0.5rem 0.5rem 0 0.5rem;
-}
+} */
 
 .accordion-button:not(.collapsed) {
   color: #212529;
@@ -42,4 +42,11 @@ a:hover {
   border-color: #ffffff;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 400px;
+  overflow-x: hidden;
+  width: 400px;
 }

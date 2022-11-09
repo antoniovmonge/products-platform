@@ -1,0 +1,116 @@
+<div class="col-3 p-3 text-white bg-dark">
+  <!-- ACCORDION -->
+  <div class="accordion" id="accordionSidebar">
+    <!-- Categories Section -->
+    <div class="accordion-item bg-dark">
+      <h2 class="accordion-header" id="headingOne">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="false"
+          aria-controls="collapseOne">
+          CATEGORIES
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+        data-bs-parent="#accordionSidebar">
+        <div class="accordion-body">
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+              {% if not category %}
+              <a href="{% url 'catalog:product_list' %}" class="nav-link active">
+                {% else %}
+                <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
+                  {% endif %}
+                  <div class="row justify-content-between">
+                    <div class="col">
+                      <p>All</p>
+                    </div>
+                    <div class="col text-end">
+                      <p>{{total_products|length}} product{{total_products|length|pluralize}}</p>
+                    </div>
+                  </div>
+                </a>
+            </li>
+            {% for c in categories %}
+            <li class="nav-item">
+              {% if category.slug == c.slug %}
+              <a href="{{ c.get_absolute_url }}" class="nav-link active">
+                {% else %}
+                <a href="{{ c.get_absolute_url }}" class="nav-link text-white">
+                  {% endif %}
+                  <div class="row justify-content-between">
+                    <div class="col">
+                      <p>{{ c.name|capfirst }}</p>
+                    </div>
+                    <div class="col text-end">
+                      <p>{{c.total_products}} product{{c.total_products|pluralize}}</p>
+                    </div>
+                  </div>
+                </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Companies Section -->
+    <div class="accordion-item bg-dark">
+      <h2 class="accordion-header" id="headingTwo">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseTwo"
+          aria-expanded="false"
+          aria-controls="collapseTwo">
+          COMPANIES
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+        data-bs-parent="#accordionSidebar">
+        <div class="accordion-body">
+          <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+              {% if not company %}
+              <a href="{% url 'catalog:product_list' %}" class="nav-link active">
+                {% else %}
+                <a href="{% url 'catalog:product_list' %}" class="nav-link text-white">
+                  {% endif %}
+                  <div class="row justify-content-between">
+                    <div class="col">
+                      <p>All</p>
+                    </div>
+                    <div class="col text-end">
+                      <p>{{total_products|length}} product{{total_products|length|pluralize}}</p>
+                    </div>
+                  </div>
+                </a>
+            </li>
+            {% for c in companies %}
+            <li class="nav-item">
+              {% if company.slug == c.slug %}
+              <a href="{{ c.get_absolute_url }}" class="nav-link active">
+                {% else %}
+                <a href="{{ c.get_absolute_url }}" class="nav-link text-white">
+                  {% endif %}
+                  <div class="row justify-content-between">
+                    <div class="col">
+                      <p>{{ c.name|capfirst }}</p>
+                    </div>
+                    <div class="col text-end">
+                      <p>{{c.total_products}} product{{c.total_products|pluralize}}</p>
+                    </div>
+                  </div>
+                </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END ACCORDION -->
+</div>
