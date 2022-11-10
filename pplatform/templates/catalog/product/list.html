@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}
+{% load crispy_forms_tags %}
 
+{% block title %}
 {% if category %}
 {{ category.name }}
 {% elif company %}
@@ -9,7 +10,6 @@
 {% else %}
 Products
 {% endif %}
-
 {% endblock title %}
 
 {% block content %}
@@ -17,7 +17,7 @@ Products
   {% include 'catalog/product/header_search.html' %}
 </div>
 <br>
-<div class="row gx-5">
+
   <!-- SIDEBAR -->
   {% comment %}
   {% include 'catalog/product/sidebar.html' %}
@@ -31,67 +31,21 @@ Products
       {% elif company %}
       Results for company: "{{ company.name|capfirst }}"
       {% elif search_query %}
-      Resluts for search term: "{{ search_query }}"
+      Results for search term: "{{ search_query }}"
       {% else %}
       Showing all products
       {% endif %}
     </h2>
+    <br>
     <!-- PRODUCT CARDS SECTION -->
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
       {% for product in products %}
       <div class="col">
-        <div class="card h-100">
-
-          <!-- ADD TO SELECTION BUTTON SECTION -->
-          <div class="card-header">
-            {% if product.slug in selection_list %}
-            <form action="{% url 'selection:selection_remove' product.id %}"
-              method="post">
-              <input type="submit" value="Remove" class="btn btn-secondary">
-              {% csrf_token %}
-            </form>
-            {% else %}
-            <form action="{% url 'selection:selection_add' product.id %}" method="post">
-              {{ selection_product_form }}
-              {% csrf_token %}
-              <input type="submit" value="Add to selection" class="btn btn-primary">
-            </form>
-            {% endif %}
-          </div>
-          <!-- END add to selection buttons -->
-
-          <a href="{{ product.get_absolute_url }}">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" style="height: 170px; object-fit: cover;">
-            {% else %}
-            <img src="{% static 'images/no_image.png' %}" class="card-img-top"
-              style="height: 170px; object-fit: cover;">
-            {% endif %}
-          </a>
-
-          <div class="card-body">
-
-            <h5 class="card-title">
-              <a href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
-            </h5>
-
-            <p class="card-text">
-              Category: <a href="{{ product.category.get_absolute_url }}">{{product.category|capfirst}}</a> <br>
-              Company: <a href="{{ product.company.get_absolute_url }}">{{product.company|capfirst}}</a>
-            </p>
-            {% if product.description %}
-            <p class="card-text">
-              <a href="{{ product.get_absolute_url }}">{{product.description|truncatechars:60}}</a>
-            </p>
-            {% endif %}
-          </div>
-
-
-        </div>
+        {% include 'catalog/product/list_product_card.html' %}
       </div>
       {% endfor %}
     </div>
-</div>
+
 <br>
 {% include 'pagination.html' with queryset=products custom_range=custom_range %}
 {% endblock %}
