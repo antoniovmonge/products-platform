@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categories
+            </a>
+            <ul class="dropdown-menu scrollable-menu">
+              {% for c in categories %}
+              <li>
+                {% if category.slug == c.slug %}
+                <a class="dropdown-item active" href="{{ c.get_absolute_url }}">
+                {% else %}
+                <a class="dropdown-item" href="{{ c.get_absolute_url }}">
+                {% endif %}
+                <div class="row">
+                  <div class="col">
+                    {{ c.name|capfirst }}
+                  </div>
+                  <div class="col text-end">
+                    {{c.total_products}} product{{c.total_products|pluralize}}
+                  </div>
+                </div>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Companies
+            </a>
+            <ul class="dropdown-menu scrollable-menu">
+              {% for c in companies %}
+              <li>
+                {% if company.slug == c.slug %}
+                <a class="dropdown-item active" href="{{ c.get_absolute_url }}">
+                  {% else %}
+                  <a class="dropdown-item" href="{{ c.get_absolute_url }}">
+                    {% endif %}
+                    <div class="row">
+                      <div class="col">
+                        {{ c.name|capfirst|truncatechars:25 }}
+                      </div>
+                      <div class="col text-end">
+                        {{c.total_products}} product{{c.total_products|pluralize}}
+                      </div>
+                    </div>
+                  </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" style="width: 450px;" action="{% url 'catalog:product_list' %}" method="get" role="search">
+          <div class="input-group me-2">
+            <!-- <label class="form-label" for="formInput#search">Search by ... </label> -->
+            <input class="form-control" id="formInput#search" type="text" name="search_query"
+              placeholder="Search by product, company, categories..." value="{{search_query}}" />
+            <button class="btn btn-outline-secondary" type="button" id="formInput#search">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
