@@ -16,6 +16,7 @@ Products
 <div class="row">
   {% include 'catalog/product/header_search.html' %}
 </div>
+<br>
 <div class="row gx-5">
   <!-- SIDEBAR -->
   {% comment %}
@@ -24,34 +25,19 @@ Products
   <!-- End Sidebar -->
 
   <!-- Main Content -->
-  <div class="col-9">
-
-    <!-- ROW FOR SEARCHBAR -->
-    {% comment %}
-    <div class="row">
-      <div class="col">
-        <!-- SEARCHBAR -->
-        {% include 'catalog/product/searchbar.html' %}
-        <!-- END Searchbar -->
-      </div>
-      <div class="col">
-        <!-- Empty col to the right of the searchbar -->
-      </div>
-    </div>
-    {% endcomment %}
-    <h1>
+    <h2>
       {% if category %}
-      {{ category.name|capfirst }}
+      Results for category: "{{ category.name|capfirst }}"
       {% elif company %}
-      {{ company.name|capfirst }}
+      Results for company: "{{ company.name|capfirst }}"
+      {% elif search_query %}
+      Resluts for search term: "{{ search_query }}"
       {% else %}
-      Products
+      Showing all products
       {% endif %}
-    </h1>
-    <br>
-
+    </h2>
     <!-- PRODUCT CARDS SECTION -->
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-2">
       {% for product in products %}
       <div class="col">
         <div class="card h-100">
@@ -85,9 +71,9 @@ Products
 
           <div class="card-body">
 
-            <h3 class="card-title">
+            <h5 class="card-title">
               <a href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
-            </h3>
+            </h5>
 
             <p class="card-text">
               Category: <a href="{{ product.category.get_absolute_url }}">{{product.category|capfirst}}</a> <br>
@@ -105,8 +91,7 @@ Products
       </div>
       {% endfor %}
     </div>
-    <br>
-    {% include 'pagination.html' with queryset=products custom_range=custom_range %}
-  </div>
 </div>
+<br>
+{% include 'pagination.html' with queryset=products custom_range=custom_range %}
 {% endblock %}
