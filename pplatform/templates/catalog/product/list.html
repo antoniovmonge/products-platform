@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}
+{% load crispy_forms_tags %}
 
+{% block title %}
 {% if category %}
 {{ category.name }}
 {% elif company %}
@@ -9,83 +10,14 @@
 {% else %}
 Products
 {% endif %}
-
 {% endblock title %}
 
 {% block content %}
 <div class="row">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Categories
-            </a>
-            <ul class="dropdown-menu scrollable-menu">
-              {% for c in categories %}
-              <li>
-                {% if category.slug == c.slug %}
-                <a class="dropdown-item active" href="{{ c.get_absolute_url }}">
-                {% else %}
-                <a class="dropdown-item" href="{{ c.get_absolute_url }}">
-                {% endif %}
-                <div class="row">
-                  <div class="col">
-                    {{ c.name|capfirst }}
-                  </div>
-                  <div class="col text-end">
-                    {{c.total_products}} product{{c.total_products|pluralize}}
-                  </div>
-                </div>
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Companies
-            </a>
-            <ul class="dropdown-menu scrollable-menu">
-              {% for c in companies %}
-              <li>
-                {% if company.slug == c.slug %}
-                <a class="dropdown-item active" href="{{ c.get_absolute_url }}">
-                  {% else %}
-                  <a class="dropdown-item" href="{{ c.get_absolute_url }}">
-                    {% endif %}
-                    <div class="row">
-                      <div class="col">
-                        {{ c.name|capfirst|truncatechars:25 }}
-                      </div>
-                      <div class="col text-end">
-                        {{c.total_products}} product{{c.total_products|pluralize}}
-                      </div>
-                    </div>
-                  </a>
-              </li>
-              {% endfor %}
-            </ul>
-          </li>
-        </ul>
-        <form class="d-flex" action="{% url 'catalog:product_list' %}" method="get" role="search">
-          <div class="input-group me-2">
-            <!-- <label class="form-label" for="formInput#search">Search by ... </label> -->
-            <input class="form-control" id="formInput#search" type="text" name="search_query"
-              placeholder="Search by product, company, categories..." value="{{search_query}}" />
-            <button class="btn btn-outline-secondary" type="button" id="formInput#search">Search</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </nav>
+  {% include 'catalog/product/header_search.html' %}
 </div>
-<div class="row gx-5">
+<br>
+
   <!-- SIDEBAR -->
   {% comment %}
   {% include 'catalog/product/sidebar.html' %}
@@ -93,89 +25,27 @@ Products
   <!-- End Sidebar -->
 
   <!-- Main Content -->
-  <div class="col-9">
-
-    <!-- ROW FOR SEARCHBAR -->
-    {% comment %}
-    <div class="row">
-      <div class="col">
-        <!-- SEARCHBAR -->
-        {% include 'catalog/product/searchbar.html' %}
-        <!-- END Searchbar -->
-      </div>
-      <div class="col">
-        <!-- Empty col to the right of the searchbar -->
-      </div>
-    </div>
-    {% endcomment %}
-    <h1>
+    <h2>
       {% if category %}
-      {{ category.name|capfirst }}
+      Results for category: "{{ category.name|capfirst }}"
       {% elif company %}
-      {{ company.name|capfirst }}
+      Results for company: "{{ company.name|capfirst }}"
+      {% elif search_query %}
+      Results for search term: "{{ search_query }}"
       {% else %}
-      Products
+      Showing all products
       {% endif %}
-    </h1>
+    </h2>
     <br>
-
     <!-- PRODUCT CARDS SECTION -->
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
       {% for product in products %}
       <div class="col">
-        <div class="card h-100">
-
-          <!-- ADD TO SELECTION BUTTON SECTION -->
-          <div class="card-header">
-            {% if product.slug in selection_list %}
-            <form action="{% url 'selection:selection_remove' product.id %}"
-              method="post">
-              <input type="submit" value="Remove" class="btn btn-secondary">
-              {% csrf_token %}
-            </form>
-            {% else %}
-            <form action="{% url 'selection:selection_add' product.id %}" method="post">
-              {{ selection_product_form }}
-              {% csrf_token %}
-              <input type="submit" value="Add to selection" class="btn btn-primary">
-            </form>
-            {% endif %}
-          </div>
-          <!-- END add to selection buttons -->
-
-          <a href="{{ product.get_absolute_url }}">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" style="height: 170px; object-fit: cover;">
-            {% else %}
-            <img src="{% static 'images/no_image.png' %}" class="card-img-top"
-              style="height: 170px; object-fit: cover;">
-            {% endif %}
-          </a>
-
-          <div class="card-body">
-
-            <h3 class="card-title">
-              <a href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
-            </h3>
-
-            <p class="card-text">
-              Category: <a href="{{ product.category.get_absolute_url }}">{{product.category|capfirst}}</a> <br>
-              Company: <a href="{{ product.company.get_absolute_url }}">{{product.company|capfirst}}</a>
-            </p>
-            {% if product.description %}
-            <p class="card-text">
-              <a href="{{ product.get_absolute_url }}">{{product.description|truncatechars:60}}</a>
-            </p>
-            {% endif %}
-          </div>
-
-
-        </div>
+        {% include 'catalog/product/list_product_card.html' %}
       </div>
       {% endfor %}
     </div>
-    <br>
-    {% include 'pagination.html' with queryset=products custom_range=custom_range %}
-  </div>
-</div>
+
+<br>
+{% include 'pagination.html' with queryset=products custom_range=custom_range %}
 {% endblock %}

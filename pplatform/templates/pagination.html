@@ -1,5 +1,5 @@
 {% if queryset.has_other_pages %}
-<nav aria-label="Page navigation general">
+<div aria-label="Page navigation general">
   <ul class="pagination justify-content-center">
 
     {% if queryset.has_previous %}
@@ -32,5 +32,5 @@
     {% endif %}
 
   </ul>
-  </nav>
+  </div>
 {% endif %}

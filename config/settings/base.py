@@ -78,6 +78,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "easy_thumbnails",
     "embed_video",
+    "django_filters",
 ]
 
 LOCAL_APPS = [

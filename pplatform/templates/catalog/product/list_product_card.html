@@ -1,0 +1,49 @@
+{% load static %}
+<div class="card h-100">
+
+  <!-- ADD TO SELECTION BUTTON SECTION -->
+  <div class="card-header">
+    {% if product.slug in selection_list %}
+    <form action="{% url 'selection:selection_remove' product.id %}"
+      method="post">
+      <input type="submit" value="Remove" class="btn btn-secondary">
+      {% csrf_token %}
+    </form>
+    {% else %}
+    <form action="{% url 'selection:selection_add' product.id %}" method="post">
+      {{ selection_product_form }}
+      {% csrf_token %}
+      <input type="submit" value="Add to selection" class="btn btn-primary">
+    </form>
+    {% endif %}
+  </div>
+  <!-- END add to selection buttons -->
+
+  <a href="{{ product.get_absolute_url }}">
+    {% if product.image %}
+    <img src="{{ product.image.url }}" class="card-img-top" style="height: 170px; object-fit: cover;">
+    {% else %}
+    <img src="{% static 'images/no_image.png' %}" class="card-img-top"
+      style="height: 170px; object-fit: cover;">
+    {% endif %}
+  </a>
+
+  <div class="card-body">
+
+    <h5 class="card-title">
+      <a href="{{ product.get_absolute_url }}">{{ product.name|capfirst }}</a>
+    </h5>
+
+    <p class="card-text">
+      Category: <a href="{{ product.category.get_absolute_url }}">{{product.category|capfirst}}</a> <br>
+      Company: <a href="{{ product.company.get_absolute_url }}">{{product.company|capfirst}}</a>
+    </p>
+    {% if product.description %}
+    <p class="card-text">
+      <a href="{{ product.get_absolute_url }}">{{product.description|truncatechars:60}}</a>
+    </p>
+    {% endif %}
+  </div>
+
+
+</div>
