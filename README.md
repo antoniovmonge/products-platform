@@ -1,11 +1,35 @@
 # Products Platform
 
-Platform to compare Products
+Platform to compare Environmental Impact of Products.
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 License: MIT
+
+## To run the app in your computer
+
+Once the code is in your computer, run the following command:
+
+My suggestion is to write this command in a terminal that remains open. In this way it is possible to monitorize what is going on, or if something goes wrong.
+
+```bash
+docker-compose -f local.yml up --build
+```
+
+When the application runs locally, it also loads the following data to the db to allow testing everything faster without the need of creating them manually:
+- a **superuser**
+- a normal **user**
+- a user that is **company-admin**. This user has CRUD permissions for the products of the company it belongs.
+- Also the csv of lo load the products and companies is required, but to the date it is not included due to data ownership. This file can be requested to me for running a demo. (In the future there will be some test/fake data included to run a demo directly.)
+
+The commands are on the path `compose/local/django/start`
+
+To know the email and password of the automatically created users, please check the code that generates them under the path `pplatform/users/management/commands`:
+
+- **superuser** and "basic" **user**: `create_local_user_and_admin.py`
+- **company-admin user**: `create_local_company_admin.py`
+
 
 ## Settings
 
