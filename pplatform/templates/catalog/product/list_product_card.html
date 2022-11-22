@@ -2,18 +2,18 @@
 <div class="card h-100">
 
   <!-- ADD TO SELECTION BUTTON SECTION -->
-  <div class="card-header">
+  <div class="card-header" style="text-align: end;">
     {% if product.slug in selection_list %}
     <form action="{% url 'selection:selection_remove' product.id %}"
       method="post">
-      <input type="submit" value="Remove" class="btn btn-secondary">
+      <input type="submit" value="Remove" class="btn btn-sm btn-secondary">
       {% csrf_token %}
     </form>
     {% else %}
     <form action="{% url 'selection:selection_add' product.id %}" method="post">
       {{ selection_product_form }}
       {% csrf_token %}
-      <input type="submit" value="Add to selection" class="btn btn-primary">
+      <input type="submit" value="Add to selection" class="btn btn-sm btn-primary">
     </form>
     {% endif %}
   </div>

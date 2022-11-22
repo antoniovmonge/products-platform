@@ -50,3 +50,7 @@ a:hover {
   overflow-x: hidden;
   width: 400px;
 }
+
+.btn {
+  border-radius: 25px;
+}
