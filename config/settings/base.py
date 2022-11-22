@@ -79,6 +79,7 @@ THIRD_PARTY_APPS = [
     "easy_thumbnails",
     "embed_video",
     "django_filters",
+    "widget_tweaks",
 ]
 
 LOCAL_APPS = [

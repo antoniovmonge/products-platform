@@ -16,13 +16,13 @@
     {% block css %}
     <!-- Latest compiled and minified Bootstrap CSS -->
     <!-- ORIGINAL BOOTSTRAP -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css"
       integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Your stuff: Third-party CSS libraries go here -->
 
     <!-- NEW BOOTSTRAP THEME -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> -->
 
     <!-- This file stores project-specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
@@ -39,6 +39,9 @@
 
     <!-- place project specific Javascript in this file -->
     <script defer src="{% static 'js/project.js' %}"></script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
 
     {% endblock javascript %}
 
@@ -81,7 +84,7 @@
               {% if ACCOUNT_ALLOW_REGISTRATION %}
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">Register</a>
               </li>
               {% endif %}
               <li class="nav-item">
@@ -115,6 +118,7 @@
       </nav>
 
     </div>
+    <br><br>
     <div class="container">
 
       {% if messages %}

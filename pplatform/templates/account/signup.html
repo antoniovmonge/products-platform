@@ -1,4 +1,5 @@
 {% extends "account/base.html" %}
+{% load widget_tweaks %}
 
 {% load i18n %}
 {% load crispy_forms_tags %}
@@ -8,15 +9,33 @@
 {% block inner %}
 <h1>Sign Up</h1>
 
-<p>{% blocktranslate %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktranslate %}</p>
+<p>{% blocktranslate %}Already have an account? Then please <a href="{{ login_url }}">sign
+    in</a>.{% endblocktranslate %}</p>
 
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form|crispy }}
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}" autocomplete="off">
+
+  <div class="form-group">
+    {% csrf_token %}
+    <!-- {{ form|crispy }} -->
+    <label>{{ form.email.label_tag }}</label>
+    {{ form.email.errors }}
+    {% render_field form.email class="form-control" hx-post="/accounts/check_user_email/" hx-swap="outerhtml" hx-trigger="keyup" hx-target="#email-error" %}
+    <div id="email-error"></div>
+
+    <br>
+
+    <label>{{ form.password1.label_tag }}</label>
+    {{ form.password.errors }}
+    {% render_field form.password1 class="form-control" %}
+
+    <br>
+  </div>
+
   {% if redirect_field_value %}
   <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
   {% endif %}
   <button class="btn btn-primary" type="submit">Sign Up &raquo;</button>
+
 </form>
 
 {% endblock %}

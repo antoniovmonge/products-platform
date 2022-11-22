@@ -278,3 +278,5 @@ pplatform/media/
 .env
 .envs/*
 !.envs/.local/
+
+.allauth/
