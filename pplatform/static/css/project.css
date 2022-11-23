@@ -54,3 +54,13 @@ a:hover {
 .btn {
   border-radius: 25px;
 }
+
+.success {
+  color: green;
+  transition: all ease-in .5s;
+}
+
+.error {
+  color: red;
+  transition: all ease-in .5s;
+}

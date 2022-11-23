@@ -19,7 +19,7 @@
     <!-- {{ form|crispy }} -->
     <label>{{ form.email.label_tag }}</label>
     {{ form.email.errors }}
-    {% render_field form.email class="form-control" hx-post="/accounts/check_user_email/" hx-swap="outerhtml" hx-trigger="keyup" hx-target="#email-error" %}
+    {% render_field form.email class="form-control" hx-post="/accounts/check_user_email/" hx-swap="outerhtml" hx-trigger="keyup delay:1s" hx-target="#email-error" %}
     <div id="email-error"></div>
 
     <br>

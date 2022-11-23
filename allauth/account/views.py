@@ -887,14 +887,16 @@ regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
 
 def check_user_email(request):
     email = request.POST.get("email")
-    if re.fullmatch(regex, email):
+    if not re.fullmatch(regex, email):
+        return HttpResponse(
+            "<div id='email-error' class='error'>This is not a valid email.</div>"
+        )
+    else:
         if User.objects.filter(email=email).exists():
             return HttpResponse(
-                "<p style='color: red;'>There is already a user with this email registered.</p>"
+                "<div id='email-error' class='error'>There is already a user with this email registered.</div>"
             )
         else:
             return HttpResponse(
-                "<p style='color: green;'>This email is still not registered.</p>"
+                "<div id='email-error' class='success'>This email is still not registered.</div>"
             )
-    else:
-        return HttpResponse("<p style='color: red;'>This is not a valid email.</p>")
