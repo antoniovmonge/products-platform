@@ -1,3 +1,5 @@
+import re
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -879,14 +881,20 @@ class EmailVerificationSentView(TemplateView):
 
 email_verification_sent = EmailVerificationSentView.as_view()
 
+# Regular expression for validating an Email
+regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+
 
 def check_user_email(request):
     email = request.POST.get("email")
-    if User.objects.filter(email=email).exists():
-        return HttpResponse(
-            "<p style='color: red'>There is already a user with this email registered.</p>"
-        )
+    if re.fullmatch(regex, email):
+        if User.objects.filter(email=email).exists():
+            return HttpResponse(
+                "<p style='color: red;'>There is already a user with this email registered.</p>"
+            )
+        else:
+            return HttpResponse(
+                "<p style='color: green;'>This email is still not registered.</p>"
+            )
     else:
-        return HttpResponse(
-            "<p style='color: green'>This email is still not registered.</p>"
-        )
+        return HttpResponse("<p style='color: red;'>This is not a valid email.</p>")
