@@ -23,11 +23,11 @@ urlpatterns = [
         name="product_detail",
     ),
     path(
-        "my-products/",
+        "manage/my-products/",
         views.ManageProductListView.as_view(),
         name="manage_product_list",
     ),
-    path("create/", views.ProductCreateView.as_view(), name="product_create"),
+    path("manage/create/", views.ProductCreateView.as_view(), name="product_create"),
     path(
         "manage/product/<pk>/edit/",
         views.ProductUpdateView.as_view(),
@@ -59,3 +59,16 @@ urlpatterns = [
         name="product_content_list",
     ),
 ]
+
+new_urlpatterns = [
+    path("manage/products/", views.ProductList.as_view(), name="product-list-htmx"),
+]
+
+htmx_urlpatterns = [
+    path("manage/add-product/", views.add_product, name="add-product"),
+    path(
+        "manage/delete-product/<int:pk>/", views.delete_product, name="delete-product"
+    ),
+]
+
+urlpatterns += new_urlpatterns + htmx_urlpatterns

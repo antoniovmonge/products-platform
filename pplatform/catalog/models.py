@@ -51,7 +51,7 @@ class Product(models.Model):
     company = models.ForeignKey(
         Company, related_name="products", on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=200, db_index=True)
+    name = models.CharField(max_length=200, db_index=True, unique=True)
     slug = models.SlugField(
         max_length=200,
         unique_for_date="publish",

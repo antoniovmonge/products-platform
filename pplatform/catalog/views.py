@@ -199,3 +199,60 @@ class ProductContentListView(TemplateResponseMixin, View):
     def get(self, request, id):
         product = get_object_or_404(Product, id=id, company=request.user.company_own)
         return self.render_to_response({"product": product})
+
+
+# New views for htmx
+
+
+class ProductList(CompanyOwnerProductMixin, ListView):
+    template_name = "catalog/manage/product/htmx/products.html"
+    permission_required = "catalog.view_product"
+    model = Product
+    context_object_name = "products"
+
+    def get_queryset(self):
+        company = self.request.user.company_own
+        return company.products.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context["categories"] = Category.objects.all()
+        return context
+
+
+def add_product(request):
+    name = request.POST.get("product-name")
+    category_name = request.POST.get("category")
+    category = Category.objects.get(name=category_name)
+    company_name = request.user.company_own
+    company = Company.objects.get(name=company_name)
+
+    # create the product
+    Product.objects.create(
+        name=name,
+        category=category,
+        company=company,
+        status="PB",  # For testing
+    )
+
+    # return template with all of the company's products
+    products = request.user.company_own.products.all()
+    return render(
+        request,
+        "catalog/manage/product/htmx/partials/product-list.html",
+        {"products": products},
+    )
+
+
+def delete_product(request, pk):
+    # remove the product
+    request.user.company_own.products.filter(pk=pk).delete()
+
+    # return the template fragment
+    products = request.user.company_own.products.all()
+    return render(
+        request,
+        "catalog/manage/product/htmx/partials/product-list.html",
+        {"products": products},
+    )

@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container-fluid">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{% url 'home' %}">Products Platform</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'catalog:product_list' %}">Catalog <span
+              class="visually-hidden">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'sendemail:contact-us' %}">Contact Us</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          {# URL provided by django-allauth/account/urls.py #}
+          <a class="nav-link" href="{% url 'users:detail' request.user.email  %}">My Profile</a>
+        </li>
+        <li class="nav-item">
+          {# URL provided by django-allauth/account/urls.py #}
+          <a class="nav-link" href="{% url 'account_logout' %}">Sign Out</a>
+        </li>
+        {% else %}
+        {% if ACCOUNT_ALLOW_REGISTRATION %}
+        <li class="nav-item">
+          {# URL provided by django-allauth/account/urls.py #}
+          <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">Register</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          {# URL provided by django-allauth/account/urls.py #}
+          <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">Sign In</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+
+          {% with total_items=selection|length %}
+          {% if total_items %}
+          <a href="{% url 'selection:selection_detail' %}" class="nav-link">
+            Your selection: {{ total_items }} item{{ total_items|pluralize }}
+          </a>
+          {% else %}
+          <a href="#" class="nav-link disabled">
+            Your selection is empty
+          </a>
+          {% endif %}
+          {% endwith %}
+
+        </li>
+        <li class="nav-item">
+          <a id="log-in-link" class="nav-link" href="{% url 'catalog:manage_product_list' %}">Manage</a>
+        </li>
+        <li class="nav-item">
+          <a id="log-in-link" class="nav-link" href="{% url 'catalog:product-list-htmx' %}">Manage HTMX</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
