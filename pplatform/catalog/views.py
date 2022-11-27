@@ -55,6 +55,8 @@ def product_list(request, category_slug=None, company_slug=None):
     # already selected for comparison.
     selection = Selection(request)
     selection_list = str([item for item in selection])
+    # HTMX Selection
+    htmx_selection = str([item for item in request.user.products.all()])
     context = {
         "category": category,
         "categories": categories,
@@ -65,6 +67,7 @@ def product_list(request, category_slug=None, company_slug=None):
         "search_query": search_query,
         "custom_range": custom_range,
         "total_products": total_products,
+        "htmx_selection": htmx_selection,
     }
     return render(request, "catalog/product/list.html", context)
 
@@ -328,3 +331,17 @@ def delete_product_form_selection(request, pk):
         "catalog/product/htmx/partials/product-list.html",
         {"products": products},
     )
+
+
+@login_required
+def add_product_to_selection_counter(request):
+    # user = User.objects.filter(email=request.user.email)
+    name = request.POST.get("product-name")
+
+    product = Product.objects.get(name=name)
+    request.user.products.add(product)
+
+    # count = Product.objects.filter(users__in=user).count()
+    # count = request.user.product.count()
+    # messages.success(request, f"Added {name} to your selection.")
+    return HttpResponse("<div id='selection-counter'>Added</div>")

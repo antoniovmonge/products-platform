@@ -1,23 +1,40 @@
 {% load static %}
 <div class="card h-100">
+  <div class="card-header d-flex justify-content-between">
+    <!-- HTMX Buttons -->
+    <div>
+      {% if product.name in htmx_selection %}
+      <!-- REMOVE -->
+      X
+      {% else %}
+      <!-- ADD -->
+      <button class="btn btn-sm btn-outline-secondary"
+        style="cursor: pointer"
+        hx-post="{% url 'catalog:add-product-to-selection-counter' %}"
+        hx-vals='{"product-name": "{{product.name}}"}'
+        hx-target="#selection-counter">add</button>
+      {% endif %}
+    </div>
+    <!-- Button add to Selection traditional -->
+    <div style="text-align: end;">
+    <!-- ADD TO SELECTION BUTTON SECTION -->
+      {% if product.slug in selection_list %}
+      <form action="{% url 'selection:selection_remove' product.id %}"
+        method="post">
+        <input type="submit" value="Remove" class="btn btn-sm btn-outline-secondary">
+        {% csrf_token %}
+      </form>
+      {% else %}
+      <form action="{% url 'selection:selection_add' product.id %}" method="post">
+        {{ selection_product_form }}
+        {% csrf_token %}
+        <input type="submit" value="Add to selection" class="btn btn-sm btn-outline-primary">
+      </form>
+      {% endif %}
 
-  <div class="card-header" style="text-align: end;">
-  <!-- ADD TO SELECTION BUTTON SECTION -->
-    {% if product.slug in selection_list %}
-    <form action="{% url 'selection:selection_remove' product.id %}"
-      method="post">
-      <input type="submit" value="Remove" class="btn btn-sm btn-outline-secondary">
-      {% csrf_token %}
-    </form>
-    {% else %}
-    <form action="{% url 'selection:selection_add' product.id %}" method="post">
-      {{ selection_product_form }}
-      {% csrf_token %}
-      <input type="submit" value="Add to selection" class="btn btn-sm btn-outline-primary">
-    </form>
-    {% endif %}
-
+    </div>
   </div>
+
   <!-- END add to selection buttons -->
 
   <a href="{{ product.get_absolute_url }}">
