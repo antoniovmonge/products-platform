@@ -62,6 +62,7 @@ urlpatterns = [
 
 new_urlpatterns = [
     path("manage/products/", views.ProductList.as_view(), name="product-list-htmx"),
+    path("products/", views.SelectionList.as_view(), name="selection-list-htmx"),
 ]
 
 htmx_urlpatterns = [
@@ -69,6 +70,22 @@ htmx_urlpatterns = [
     path(
         "manage/delete-product/<int:pk>/", views.delete_product, name="delete-product"
     ),
+    path(
+        "products/search-products-htmx/",
+        views.search_products_htmx,
+        name="search-products-htmx",
+    ),
+    path(
+        "products/add-product-to-selection/",
+        views.add_product_to_selection,
+        name="add-product-to-selection",
+    ),
+    path(
+        "products/delete-product-from-selection/<int:pk>/",
+        views.delete_product_form_selection,
+        name="delete-product-from-selection",
+    ),
+    path("products/clear-messages/", views.clear_messages, name="clear-messages"),
 ]
 
 urlpatterns += new_urlpatterns + htmx_urlpatterns

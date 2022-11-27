@@ -1,9 +1,14 @@
 from django.apps import apps
+from django.contrib import messages
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Count, Q
 from django.forms.models import modelform_factory
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_http_methods
 from django.views.generic.base import TemplateResponseMixin, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
@@ -13,6 +18,8 @@ from pplatform.selection.selection import Selection
 
 from .models import Category, Company, Content, Product
 from .utils import paginate_products, search_products
+
+User = get_user_model()
 
 
 def product_list(request, category_slug=None, company_slug=None):
@@ -221,6 +228,7 @@ class ProductList(CompanyOwnerProductMixin, ListView):
         return context
 
 
+@login_required
 def add_product(request):
     name = request.POST.get("product-name")
     category_name = request.POST.get("category")
@@ -229,22 +237,25 @@ def add_product(request):
     company = Company.objects.get(name=company_name)
 
     # create the product
-    Product.objects.create(
-        name=name,
-        category=category,
-        company=company,
-        status="PB",  # For testing
-    )
+    if name:
+        Product.objects.create(
+            name=name,
+            category=category,
+            company=company,
+            status="PB",  # For testing
+        )
 
-    # return template with all of the company's products
-    products = request.user.company_own.products.all()
-    return render(
-        request,
-        "catalog/manage/product/htmx/partials/product-list.html",
-        {"products": products},
-    )
+        # return template with all of the company's products
+        products = request.user.company_own.products.all()
+        return render(
+            request,
+            "catalog/manage/product/htmx/partials/product-list.html",
+            {"products": products},
+        )
 
 
+@login_required
+@require_http_methods(["DELETE"])
 def delete_product(request, pk):
     # remove the product
     request.user.company_own.products.filter(pk=pk).delete()
@@ -254,5 +265,66 @@ def delete_product(request, pk):
     return render(
         request,
         "catalog/manage/product/htmx/partials/product-list.html",
+        {"products": products},
+    )
+
+
+# New views for SELECTION - htmx
+
+
+class SelectionList(LoginRequiredMixin, ListView):
+    template_name = "catalog/product/htmx/products.html"
+    model = Product
+    context_object_name = "products"
+
+    def get_queryset(self):
+        user = self.request.user
+        return user.products.all()
+
+
+def search_products_htmx(request):
+    search_text = request.POST.get("search")
+    user_products = request.user.products.all()
+
+    results = Product.objects.filter(name__icontains=search_text).exclude(
+        name__in=user_products.values_list("name", flat=True)
+    )
+    context = {"results": results}
+    return render(request, "catalog/product/htmx/partials/search-results.html", context)
+
+
+@login_required
+def add_product_to_selection(request):
+    user = User.objects.filter(email=request.user.email)
+    name = request.POST.get("product-name")
+
+    product = Product.objects.get(name=name)
+    request.user.products.add(product)
+
+    products = Product.objects.filter(users__in=user)
+    messages.success(request, f"Added {name} to your selection.")
+    return render(
+        request,
+        "catalog/product/htmx/partials/product-list.html",
+        {"products": products},
+    )
+
+
+def clear_messages(request):
+    return HttpResponse("")
+
+
+@login_required
+@require_http_methods(["DELETE"])
+def delete_product_form_selection(request, pk):
+    product = Product.objects.get(pk=pk)
+    name = product.name
+    request.user.products.remove(pk)
+
+    products = request.user.products.all()
+    messages.info(request, f"Deleted {name} to your selection.")
+    return render(
+        request,
+        "catalog/product/htmx/partials/product-list.html",
         {"products": products},
     )

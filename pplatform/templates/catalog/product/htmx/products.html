@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="align-center col-10 offset-1">
+  <div class="d-flex justify-content-between">
+    <p class="lead ml-0">My Selection</p>
+  </div>
+  <hr>
+  <br>
+
+    <div id="selection-product-list">
+      {% include 'catalog/product/htmx/partials/product-list.html' %}
+    </div>
+
+</div>
+
+
+{% endblock content %}

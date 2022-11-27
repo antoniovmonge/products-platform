@@ -1,6 +1,7 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.db.models.functions import Lower
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils import timezone
@@ -76,9 +77,10 @@ class Product(models.Model):
     )
     objects = models.Manager()
     published = PublishedManager()
+    users = models.ManyToManyField(CustomUser, related_name="products")
 
     class Meta:
-        ordering = ("name",)
+        ordering = [Lower("name")]
         index_together = (("id", "slug"),)
 
     def get_absolute_url(self):

@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-between">
+
+  <div class="col-5">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div hx-get="{% url 'catalog:clear-messages' %}" hx-trigger="load delay:3s">
+      <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if products %}
+    <ul class="list-group col-12">
+      {% for product in products %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ product.name }}
+
+        <!-- Remove from list button -->
+        <span class="badge rounded-pill bg-danger ms-3"
+        style="cursor: pointer;"
+        hx-delete="{% url 'catalog:delete-product-from-selection' product.pk %}"
+        hx-target="#selection-product-list"
+        hx-confirm="Are you sure you want to delete?">X</span>
+
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Your selection is currently empty.</p>
+    {% endif %}
+  </div>
+
+  <div class="col-5">
+    {% include 'catalog/product/htmx/partials/search.html' %}
+  </div>
+
+</div>
