@@ -392,3 +392,23 @@ class CatalogHtmx(LoginRequiredMixin, ListView):
         # Add in a QuerySet of all the books
         context["htmx_selection"] = htmx_selection
         return context
+
+
+def htmx_catalog_search_products(request):
+    search_text = request.POST.get("search")
+    htmx_selection = str([item for item in request.user.products.all()])
+    if search_text:
+        # results = Product.published.filter(name__icontains=search_text)
+        results = Product.published.distinct().filter(
+            Q(name__icontains=search_text)
+            | Q(description__icontains=search_text)
+            | Q(company__name__icontains=search_text)
+            | Q(category__name__icontains=search_text)
+        )
+    else:
+        results = None
+        # results = Product.published.all()
+    context = {"results": results, "htmx_selection": htmx_selection}
+    return render(
+        request, "catalog/product/htmx/partials/catalog-search-results.html", context
+    )

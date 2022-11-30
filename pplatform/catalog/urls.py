@@ -96,6 +96,11 @@ htmx_urlpatterns = [
         views.delete_product_form_selection_counter,
         name="delete-product-from-selection-counter",
     ),
+    path(
+        "products/catalog-search-htmx/",
+        views.htmx_catalog_search_products,
+        name="catalog-search-htmx",
+    ),
     path("products/clear-messages/", views.clear_messages, name="clear-messages"),
 ]
 
