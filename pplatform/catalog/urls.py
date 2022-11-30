@@ -82,14 +82,19 @@ htmx_urlpatterns = [
         name="add-product-to-selection",
     ),
     path(
+        "products/delete-product-from-selection/<int:pk>/",
+        views.delete_product_form_selection,
+        name="delete-product-from-selection",
+    ),
+    path(
         "products/add-product-to-selection-counter/",
         views.add_product_to_selection_counter,
         name="add-product-to-selection-counter",
     ),
     path(
-        "products/delete-product-from-selection/<int:pk>/",
-        views.delete_product_form_selection,
-        name="delete-product-from-selection",
+        "products/delete-product-from-selection-counter/<int:pk>/",
+        views.delete_product_form_selection_counter,
+        name="delete-product-from-selection-counter",
     ),
     path("products/clear-messages/", views.clear_messages, name="clear-messages"),
 ]

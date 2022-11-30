@@ -344,7 +344,7 @@ def add_product_to_selection_counter(request):
 
     context = {
         "products": products,
-        "product": product,
+        # "product": product,
         "htmx_selection": htmx_selection,
     }
 
@@ -354,6 +354,28 @@ def add_product_to_selection_counter(request):
     # return HttpResponse("<div id='selection-counter'>Added</div>")
     return render(
         request, "catalog/product/htmx/partials/htmx-product-list.html", context
+    )
+
+
+@login_required
+@require_http_methods(["DELETE"])
+def delete_product_form_selection_counter(request, pk):
+    # product = Product.objects.get(pk=pk)
+    # name = product.name
+    request.user.products.remove(pk)
+
+    products = Product.published.all()
+    htmx_selection = str([item for item in request.user.products.all()])
+    context = {
+        "products": products,
+        # "product": product,
+        "htmx_selection": htmx_selection,
+    }
+    # messages.info(request, f"Deleted {name} to your selection.")
+    return render(
+        request,
+        "catalog/product/htmx/partials/htmx-product-list.html",
+        context,
     )
 
 

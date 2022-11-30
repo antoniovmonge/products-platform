@@ -1,11 +1,16 @@
   {% if product.name in htmx_selection %}
   <!-- REMOVE -->
-  X
+  <span class="badge rounded-pill bg-danger ms-3"
+    style="cursor: pointer;"
+    hx-delete="{% url 'catalog:delete-product-from-selection-counter' product.pk %}"
+    hx-target="#htmx-product-list"
+    hx-confirm="Are you sure you want to delete?">X</span>
+
   {% else %}
   <!-- ADD -->
   <button class="btn btn-sm btn-outline-secondary"
     style="cursor: pointer"
     hx-post="{% url 'catalog:add-product-to-selection-counter' %}"
     hx-vals='{"product-name": "{{product.name}}"}'
-    hx-target="#product-item-btn">add</button>
+    hx-target="#htmx-product-list">add</button>
   {% endif %}

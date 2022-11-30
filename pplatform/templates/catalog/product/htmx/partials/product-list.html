@@ -21,10 +21,10 @@
 
         <!-- Remove from list button -->
         <span class="badge rounded-pill bg-danger ms-3"
-        style="cursor: pointer;"
-        hx-delete="{% url 'catalog:delete-product-from-selection' product.pk %}"
-        hx-target="#selection-product-list"
-        hx-confirm="Are you sure you want to delete?">X</span>
+          style="cursor: pointer;"
+          hx-delete="{% url 'catalog:delete-product-from-selection' product.pk %}"
+          hx-target="#selection-product-list"
+          hx-confirm="Are you sure you want to delete?">X</span>
 
       </li>
       {% endfor %}
