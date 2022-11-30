@@ -1,0 +1,11 @@
+  {% if product.name in htmx_selection %}
+  <!-- REMOVE -->
+  X
+  {% else %}
+  <!-- ADD -->
+  <button class="btn btn-sm btn-outline-secondary"
+    style="cursor: pointer"
+    hx-post="{% url 'catalog:add-product-to-selection-counter' %}"
+    hx-vals='{"product-name": "{{product.name}}"}'
+    hx-target="#product-item-btn">add</button>
+  {% endif %}

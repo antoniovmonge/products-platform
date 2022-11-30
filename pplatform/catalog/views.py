@@ -336,12 +336,37 @@ def delete_product_form_selection(request, pk):
 @login_required
 def add_product_to_selection_counter(request):
     # user = User.objects.filter(email=request.user.email)
+    products = Product.published.all()
     name = request.POST.get("product-name")
-
     product = Product.objects.get(name=name)
     request.user.products.add(product)
+    htmx_selection = str([item for item in request.user.products.all()])
+
+    context = {
+        "products": products,
+        "product": product,
+        "htmx_selection": htmx_selection,
+    }
 
     # count = Product.objects.filter(users__in=user).count()
     # count = request.user.product.count()
     # messages.success(request, f"Added {name} to your selection.")
-    return HttpResponse("<div id='selection-counter'>Added</div>")
+    # return HttpResponse("<div id='selection-counter'>Added</div>")
+    return render(
+        request, "catalog/product/htmx/partials/htmx-product-list.html", context
+    )
+
+
+class CatalogHtmx(LoginRequiredMixin, ListView):
+    template_name = "catalog/product/htmx/products_htmx.html"
+    model = Product
+    context_object_name = "products"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # HTMX Selection
+        user = self.request.user
+        htmx_selection = str([item for item in user.products.all()])
+        # Add in a QuerySet of all the books
+        context["htmx_selection"] = htmx_selection
+        return context

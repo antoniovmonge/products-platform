@@ -63,6 +63,7 @@ urlpatterns = [
 new_urlpatterns = [
     path("manage/products/", views.ProductList.as_view(), name="product-list-htmx"),
     path("products/", views.SelectionList.as_view(), name="selection-list-htmx"),
+    path("products-htmx/", views.CatalogHtmx.as_view(), name="catalog-htmx"),
 ]
 
 htmx_urlpatterns = [
