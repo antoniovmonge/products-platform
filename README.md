@@ -1,26 +1,62 @@
 # Products Platform
 
-Platform to compare Environmental Impact of Products.
-
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 License: MIT
 
-## To run the app in your computer
+🚧 Under construction. Work in Progress 🚧
 
-Once the code is in your computer, run the following command:
+## 👨‍🏫 App Description
 
-My suggestion is to write this command in a terminal that remains open. In this way it is possible to monitorize what is going on, or if something goes wrong.
+This platform allows users to **compare products** analyzing their **environmental impact**. 📊 🌱
+
+It also allows manufacturers to upload their Products with all the info and certificates.
+
+## Stack
+
+- Python 🐍
+- Django
+- **HTMX** (The new super Star) ⭐
+- Docker 🐳
+- HTML/CSS
+- Celery
+- Redis
+
+## 🚀 Get the app and launch it in your computer
+
+⚠ At this stage, due to ownership of the data,it is needed an extra CSV that could be requested to load and test the application. **The data are not uploaded to the repository** (.gitignore).
+
+### 1. Download/Clone the code
+
+```bash
+gh repo clone antoniovmonge/products-platform
+```
+
+### 2. Build the image
+
+Once the code is in your computer (and you are in the directory), run the following command:
 
 ```bash
 docker-compose -f local.yml up --build
 ```
 
-When the application runs locally, it also loads the following data to the db to allow testing everything faster without the need of creating them manually:
+❕ My suggestion is to write this command in a terminal that remains open. In this way it is possible to check what is going on, (or if something goes wrong).
+
+### 3. What happened so far
+
+When the application runs locally, it also loads the following data to the db to allow testing everything faster without needing to create products and users manually.
+
+What has been created so far:
+
+Users:
+
 - a **superuser**
 - a normal **user**
 - a user that is **company-admin**. This user has CRUD permissions for the products of the company it belongs.
+
+Products and Companies:
+
 - Also the csv of lo load the products and companies is required, but to the date it is not included due to data ownership. This file can be requested to me for running a demo. (In the future there will be some test/fake data included to run a demo directly.)
 
 The commands are on the path `compose/local/django/start`
@@ -30,7 +66,6 @@ To know the email and password of the automatically created users, please check 
 - **superuser** and "basic" **user**: `create_local_user_and_admin.py`
 - **company-admin user**: `create_local_company_admin.py`
 
-
 ## Settings
 
 Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
@@ -39,11 +74,13 @@ Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings
 
 ### Setting Up Your Users
 
--   To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
+- To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
 
--   To create a **superuser account**, use this command:
+- To create a **superuser account**, use this command:
 
-        $ python manage.py createsuperuser
+```bash
+python manage.py createsuperuser
+```
 
 For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
@@ -51,19 +88,25 @@ For convenience, you can keep your normal user logged in on Chrome and your supe
 
 Running type checks with mypy:
 
-    $ mypy pplatform
+```bash
+mypy pplatform
+```
 
 ### Test coverage
 
 To run the tests, check your test coverage, and generate an HTML coverage report:
 
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
+```bash
+coverage run -m pytest
+coverage html
+open htmlcov/index.html
+```
 
 #### Running tests with pytest
 
-    $ pytest
+```bash
+pytest
+```
 
 ### Live reloading and Sass CSS compilation
 
